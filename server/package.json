@@ -1,0 +1,19 @@
+{
+  "name": "fcc-voting-app-server",
+  "version": "1.0.0",
+  "main": "server.js",
+  "author": "greg-harrison",
+  "license": "MIT",
+  "scripts": {
+    "start": "nodemon server.js"
+  },
+  "devDependencies": {
+    "eslint": "^4.6.1",
+    "nodemon": "^1.12.0"
+  },
+  "dependencies": {
+    "cors": "^2.8.4",
+    "express": "^4.15.4",
+    "mongoose": "^4.11.11"
+  }
+}

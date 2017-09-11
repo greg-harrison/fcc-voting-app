@@ -1,0 +1,11 @@
+{
+  "name": "fcc-voting-app",
+  "version": "1.0.0",
+  "author": "greg-harrison",
+  "license": "MIT",
+  "scripts": {
+    "client-setup": "cd client && yarn install",
+    "server-setup": "cd server && yarn install",
+    "setup": "yarn client-setup && yarn server-setup"
+  }
+}
