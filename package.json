@@ -7,5 +7,6 @@
     "client-setup": "cd client && yarn install",
     "server-setup": "cd server && yarn install",
     "setup": "yarn client-setup && yarn server-setup"
-  }
+  },
+  "dependencies": {}
 }
