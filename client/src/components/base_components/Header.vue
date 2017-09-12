@@ -1,6 +1,8 @@
 <template>
-  <nav class="navbar w-100">
-    Hello World
+  <nav class="navbar navbar-toggleable-md">
+    <a href="#" class="navbar-brand">
+      Voute
+    </a>
   </nav>
 </template>
 
@@ -20,15 +22,13 @@ export default {
 }
 </script>
 
-<style scoped>
-h1,
-h2 {
-  font-weight: normal;
-}
+<style scoped lang="scss">
+@import '../../style/_variables.scss';
 
 .navbar {
-  background-color: teal;
-  color: white;
-  font-weight: bold;
+  background-color: $blue;
+  .navbar-brand {
+    color: $cream;
+  }
 }
 </style>
