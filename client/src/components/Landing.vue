@@ -1,5 +1,5 @@
 <template>
-  <div class="hello">
+  <div class="landing container p-0">
     <h1>{{ msg }}</h1>
     <h2>{{ results.data }}</h2>
   </div>
@@ -9,7 +9,7 @@
 import axios from 'axios'
 
 export default {
-  name: 'hello',
+  name: 'landing',
   data() {
     return {
       msg: 'Welcome to Your Vue.js App',
@@ -18,7 +18,6 @@ export default {
   },
   mounted() {
     axios.get('http://localhost:8081').then(response => {
-      console.log('response', response);
       this.results = response
     })
   }
