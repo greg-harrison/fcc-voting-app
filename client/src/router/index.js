@@ -1,11 +1,13 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Landing from '@/components/Landing'
 import Header from '@/components/base_components/Header'
+import Landing from '@/components/Landing'
+import UserSettings from '@/components/UserSettings'
 
 Vue.use(Router)
 
 export default new Router({
+  mode: 'history',
   routes: [
     {
       path: '/',
@@ -15,9 +17,10 @@ export default new Router({
       }
     },
     {
-      path: '/test',
+      //user/:userId
+      path: '/user',
       components: {
-        default: Landing,
+        default: UserSettings,
         header: Header
       }
     }
