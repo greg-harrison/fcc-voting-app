@@ -13,6 +13,13 @@ export default new Router({
         default: Landing,
         header: Header
       }
+    },
+    {
+      path: '/test',
+      components: {
+        default: Landing,
+        header: Header
+      }
     }
   ]
 })

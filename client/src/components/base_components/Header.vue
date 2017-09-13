@@ -1,7 +1,7 @@
 <template>
   <nav class="navbar navbar-toggleable-md">
     <a href="#" class="navbar-brand">
-      Voute
+      Voute {{currentRoute}}
     </a>
   </nav>
 </template>
@@ -13,6 +13,7 @@ export default {
   name: 'header',
   data() {
     return {
+      currentRoute: this.$route.fullPath
     }
   },
   mounted() {
