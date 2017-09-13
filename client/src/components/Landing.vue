@@ -30,6 +30,7 @@ export default {
 @import '../style/_variables.scss';
 .landing {
   margin-top: 3rem;
+  text-align: center;
 }
 
 h1,
