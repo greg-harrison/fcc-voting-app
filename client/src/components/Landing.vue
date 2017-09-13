@@ -17,9 +17,10 @@ export default {
     }
   },
   mounted() {
-    axios.get('http://localhost:8081').then(response => {
-      this.results = response
-    })
+    axios.get('http://localhost:8081').then(
+      response => {
+        this.results = response
+      })
   }
 }
 </script>
