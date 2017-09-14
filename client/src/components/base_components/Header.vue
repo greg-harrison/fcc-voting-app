@@ -52,5 +52,8 @@ export default {
   button.navbar-toggler {
     color: $cream;
   }
+  .router-link-active {
+    color: $cream!important;
+  }
 }
 </style>
