@@ -1,14 +1,21 @@
+const fs = require('fs');
+const path = require('path');
+const basename = path.basename(module.filename);
 const dotenv = require('dotenv').config()
 const Sequelize = require('sequelize')
 const pg = require('pg')
 
 pg.defaults.ssl = true
 
+let sequelize
+
 if (process.env.PG_CONNECTION_URI) {
-  const sequelize = new Sequelize(process.env.PG_CONNECTION_URI, {})
+  sequelize = new Sequelize(process.env.PG_CONNECTION_URI, {})
 } else {
   console.log('Connection failed: Need connection URI for Heroku Database')
 }
+
+console.log('basename', basename);
 
 let db = {}
 
