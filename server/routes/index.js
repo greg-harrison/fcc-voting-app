@@ -2,13 +2,13 @@ const express = require('express')
 const router = express.Router()
 
 router.use('/poll', require('./poll'))
-
 router.use('/user', require('./user'))
 
-router.get('/', (req, res) => {
-  res.status(200).send('Server is sending this to the front end! WOWIE!')
-})
+router.get('/', (req, res) => res.status(200).send(
+  'Server is sending this to the front end! WOWIE!'
+))
 
+module.exports = router
 
 // DB Structure Draft
 
@@ -90,4 +90,3 @@ router.get('/', (req, res) => {
 // + getResponse() -> pollId, userId, response <userId is required to get the response>
 // + editResponse() -> pollId, userId, response <userId is required to edit the response>
 
-module.exports = router
