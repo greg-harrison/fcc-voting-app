@@ -10,30 +10,6 @@ router.get('/', (req, res) => res.status(200).send(
 
 module.exports = router
 
-// DB Structure Draft
-
-// USER table
-// - PK_user_id
-// - name
-// - email
-
-// POLL table
-// - PK_poll_id
-// - FK_user_id_created
-// - question
-// - created_date
-
-// POLL_OPTION table
-// - PK_poll_option_id - rename it as it comes through the Left join
-// - FK_poll_id
-// - option_value
-
-// POLL_RESPONSE table
-// - PK_response_id
-// - FK_poll_id
-// - FK_poll_option_id
-// - FK_user_id (optional because they are public, no account required)
-
 // Getting the list of options for a poll in POSTGRES
 // SELECT
 // 	poll.poll_id,
