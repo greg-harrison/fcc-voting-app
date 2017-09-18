@@ -15,8 +15,6 @@ if (process.env.PG_CONNECTION_URI) {
   console.log('Connection failed: Need connection URI for Heroku Database')
 }
 
-console.log('basename', basename);
-
 let db = {}
 
 fs

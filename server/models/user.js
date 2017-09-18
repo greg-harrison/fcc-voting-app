@@ -7,16 +7,12 @@ module.exports = function (sequelize, DataTypes) {
       primaryKey: true,
       autoIncrement: true
     },
-    name: {
-      type: DataTypes.STRING
-    },
-    email: {
-      type: DataTypes.STRING
-    }
-  }
-  );
-  user.sync({ force: true }).then(() => {
+    name: DataTypes.STRING,
+    email: DataTypes.STRING
   });
+
+  user.sync({ force: true }).then(() => {
+  })
 
   return user
 }
