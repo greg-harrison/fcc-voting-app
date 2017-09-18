@@ -3,8 +3,8 @@ const DB = require('../models/')
 
 module.exports = {
   createUser: (req, res) => {
-    console.log('req', req);
     let data = {
+      user_id: 2,
       name: 'Greg Test',
       email: 'harrison.test@gmail.com'
     }
@@ -13,7 +13,13 @@ module.exports = {
     })
   },
   getUser: (req, res) => {
-    console.log('req', req);
-    console.log('res', res);
+    console.log('req.params', req.params);
+    DB.user.findAll({
+      where: ({
+        user_id: req.params.user_id
+      })
+    }).then((user) => {
+      return user;
+    })
   }
 }

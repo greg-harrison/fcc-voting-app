@@ -8,5 +8,7 @@
     "server-setup": "cd server && yarn install",
     "setup": "yarn client-setup && yarn server-setup"
   },
-  "dependencies": {}
+  "dependencies": {
+    "dotenv-webpack": "^1.5.4"
+  }
 }
