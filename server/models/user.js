@@ -1,5 +1,3 @@
-const pg = require('pg')
-
 module.exports = function (sequelize, DataTypes) {
   let user = sequelize.define('user', {
     user_id: {
@@ -9,10 +7,13 @@ module.exports = function (sequelize, DataTypes) {
     },
     name: DataTypes.STRING,
     email: DataTypes.STRING
-  });
+  }, {
+      freezeTableName: true,
+      tableName: 'user',
+      timestamps: false
+    });
 
-  user.sync({ force: true }).then(() => {
-  })
+  user.sync()
 
   return user
 }
