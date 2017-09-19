@@ -13,13 +13,15 @@ module.exports = {
     })
   },
   getUser: (req, res) => {
-    console.log('req.params', req.params);
     DB.user.findAll({
       where: ({
         user_id: req.params.user_id
       })
     }).then((user) => {
-      return user;
+      console.log('user', user);
+      console.log('res', res);
+      res.status(200).send(user);
     })
+    console.log('res', res);
   }
 }
