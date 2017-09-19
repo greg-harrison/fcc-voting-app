@@ -16,15 +16,24 @@ export default {
   }),
   methods: {
     loadData: () => {
-      console.log('app', app);
-      axios.get(process.env.API_URL + '/user/1')
-        .then(
+      var config = {
+        headers: {
+          'Access-Control-Allow-Methods': 'GET,PUT,PATCH,POST,DELETE',
+          'Access-Control-Allow-Origin': '*',
+          'Content-Type': 'application/json'
+        }
+      }
+
+      axios.get(process.env.API_URL + '/user/1', config).then(
         res => {
           console.log('res', res);
           this.user = res.data
         })
         .catch((error) => {
           console.log('error', error);
+          console.log(error.response);
+          console.log(error.response.status);
+          console.log(error.response.headers);
         })
     }
   },
