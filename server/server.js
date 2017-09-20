@@ -4,7 +4,7 @@ const logger = require('morgan')
 const cors = require('cors')
 const middleware = require('./middleware')
 
-const port = process.env.PORT || 8081
+const port = process.env.VOTE_BE_PORT || 8081
 
 const app = express()
 

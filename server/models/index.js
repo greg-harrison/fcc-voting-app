@@ -8,8 +8,8 @@ pg.defaults.ssl = true
 
 let sequelize
 
-if (process.env.PG_CONNECTION_URI) {
-  sequelize = new Sequelize(process.env.PG_CONNECTION_URI, {})
+if (process.env.VOTE_PG_CONNECTION_URI) {
+  sequelize = new Sequelize(process.env.VOTE_PG_CONNECTION_URI, {})
 } else {
   console.log('Connection failed: Need connection URI for Heroku Database')
 }
