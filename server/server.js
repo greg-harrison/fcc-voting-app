@@ -16,7 +16,7 @@ let corsOptions = {
   "maxAge": 3600
 }
 
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(logger('dev'))
 app.use(middleware.malformedUrl)
 app.use('/', routes)
