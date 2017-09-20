@@ -2,11 +2,16 @@
   <div class="user_settings container p-0">
     <h1>Hello {{user.name}}</h1>
     <p>{{user.email}}</p>
+    <main-button btn-text="Hello world" :onClick="testClick" btn-color="blue">
+    </main-button>
+    <main-button btn-text="Hello world" :onClick="testClick" btn-color="cream" text-color="black">
+    </main-button>
   </div>
 </template>
 
 <script>
 import axios from 'axios'
+import MainButton from './reusable_components/main-button.vue'
 
 export default {
   data: () => ({
@@ -15,6 +20,9 @@ export default {
       email: ''
     }
   }),
+  components: {
+    MainButton
+  },
   methods: {
     loadData: function() {
       // Shouldn't use fat-arrow (=>) functions on methods
@@ -28,6 +36,9 @@ export default {
         .catch((error) => {
           console.log('error', error);
         })
+    },
+    testClick() {
+      console.log('click from parent');
     }
   },
 
