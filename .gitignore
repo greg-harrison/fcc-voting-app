@@ -9,6 +9,7 @@ yarn-error.log*
 .yarn-integrity
 
 .env
+.envrc.*
 
 /client/node_modules
 /server/node_modules

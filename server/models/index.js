@@ -1,7 +1,6 @@
 const fs = require('fs');
 const path = require('path');
 const basename = path.basename(module.filename);
-const dotenv = require('dotenv').config()
 const Sequelize = require('sequelize')
 const pg = require('pg')
 
