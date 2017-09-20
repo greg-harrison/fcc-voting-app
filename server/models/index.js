@@ -48,4 +48,6 @@ db.Sequelize = Sequelize
 db.poll = require('./poll')(sequelize, Sequelize)
 db.user = require('./user')(sequelize, Sequelize)
 
+db.poll.hasOne(db.user, { as: db.poll.user_id_created })
+
 module.exports = db

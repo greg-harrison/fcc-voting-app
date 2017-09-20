@@ -1,12 +1,15 @@
 module.exports = function (sequelize, DataTypes) {
   let poll = sequelize.define('poll', {
-    user_id: {
+    poll_id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true
     },
-    name: DataTypes.STRING,
-    email: DataTypes.STRING
+    user_id_created: {
+      type: DataTypes.INTEGER,
+    },
+    question: DataTypes.STRING,
+    createdDate: DataTypes.DATE
   });
 
   return poll

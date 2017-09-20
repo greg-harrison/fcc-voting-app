@@ -4,6 +4,9 @@ const pollController = require('../controllers/poll')
 
 // assume starts with /poll
 router.get('/:poll_id', pollController.getPoll)
+
+router.get('/list/:user_id', pollController.getUserCreatedPolls)
+
 router.get('/responses/:poll_id', pollController.getPollResponses)
 router.get('/create/', pollController.createPoll)
 
