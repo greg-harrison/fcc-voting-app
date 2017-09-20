@@ -1,6 +1,17 @@
 /* RGB */
+$white: #FFFFFF;
+$black: #000000;
 $orange: rgba(255, 103, 0, 1);
 $cream: rgba(235, 235, 235, 1);
 $grey: rgba(192, 192, 192, 1);
 $blue: rgba(58, 110, 165, 1);
 $navy: rgba(0, 78, 152, 1);
+
+$colors:
+  'white' $white,
+  'black' $black,
+  'orange' $orange,
+  'cream' $cream,
+  'grey' $grey,
+  'blue' $blue,
+  'navy' $navy

@@ -1,0 +1,26 @@
+@import './_variables.scss';
+
+//Generates override for text color
+// s3-c-$colorname
+@each $i in $colors {
+  .va-c-#{nth($i, 1)} {
+    color: nth($i, 2)!important;
+  }
+}
+
+//Generates override for dom-node background color
+// s3-bg-$colorname
+@each $i in $colors {
+  .va-bg-#{nth($i, 1)} {
+    background-color: nth($i, 2)!important;
+
+    &.btn {
+      background-color: nth($i, 2)!important;
+      &:hover,
+      &:active,
+      &:focus {
+        background-color: darken(nth($i, 2), 5%)!important;
+      }
+    }
+  }
+}
