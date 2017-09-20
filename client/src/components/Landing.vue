@@ -10,17 +10,24 @@ import axios from 'axios'
 
 export default {
   name: 'landing',
-  data() {
-    return {
-      msg: 'Welcome to Voute',
-      results: []
+  data: () => ({
+    msg: 'Welcome to Voute',
+    results: []
+  }),
+  methods: {
+    loadData: function() {
+      const vm = this
+      axios.get('http://localhost:8081').then(
+        response => {
+          vm.results = response
+        })
+        .catch((error) => {
+          console.log('error', error);
+        })
     }
   },
   mounted() {
-    axios.get('http://localhost:8081').then(
-      response => {
-        this.results = response
-      })
+    this.loadData()
   }
 }
 </script>

@@ -35,7 +35,6 @@ export default {
   },
   mounted() {
     // Check user status
-    console.log('mounted');
   }
 }
 </script>
