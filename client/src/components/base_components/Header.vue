@@ -22,6 +22,7 @@
 
 <script>
 import axios from 'axios'
+import AuthService from './reusable_components/auth'
 
 export default {
   name: 'header',
@@ -31,6 +32,13 @@ export default {
       user: {
         name: null
       }
+    }
+  },
+  methods: {
+    login: function() {
+      const vm = this
+      const auth = new AuthService()
+      auth.login()
     }
   },
   mounted() {
