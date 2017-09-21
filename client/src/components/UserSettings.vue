@@ -29,7 +29,9 @@ export default {
       //  it doesn't allow access to THIS, thus breaking data-binding
       const vm = this
 
-      axios.get(process.env.API_URL + '/user/1').then(
+      console.log('process.env.VOTE_API_URL', process.env.VOTE_API_URL);
+
+      axios.get(process.env.VOTE_API_URL + '/user/1').then(
         res => {
           vm.user = res.data[0]
         })

@@ -6,11 +6,9 @@ export default class AuthService {
     this.login = this.login.bind(this)
   }
 
-  // Replace this stuff with env variables
-
   auth0 = new auth0.WebAuth({
-    domain: 'g-harrison.auth0.com',
-    clientID: 'qmJ9xmGixz9zEKQ_lu5Wb6DDPVvU03Gm',
+    domain: process.env.VOTE_AUTH0_DOMAIN,
+    clientID: process.env.VOTE_AUTH0_CLIENTID,
     redirectUri: 'http://localhost:8080/auth',
     audience: 'https://g-harrison.auth0.com/userinfo',
     responseType: 'token id_token',
