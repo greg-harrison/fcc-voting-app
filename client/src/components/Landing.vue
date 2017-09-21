@@ -2,6 +2,7 @@
   <div class="landing container p-0">
     <h1>{{ msg }}</h1>
     <h2>{{ results.data }}</h2>
+    <button @click="login">TEST</button>
   </div>
 </template>
 
@@ -24,7 +25,7 @@ export default {
         .catch((error) => {
           console.log('error', error);
         })
-    }
+    },
   },
   mounted() {
     this.loadData()
