@@ -11,7 +11,7 @@
 
 <script>
 import axios from 'axios'
-import MainButton from './reusable_components/main-button.vue'
+import MainButton from '../reusable_components/main-button.vue'
 
 export default {
   data: () => ({
@@ -29,7 +29,9 @@ export default {
       //  it doesn't allow access to THIS, thus breaking data-binding
       const vm = this
 
-      axios.get(process.env.API_URL + '/user/1').then(
+      console.log('process.env.VOTE_API_URL', process.env.VOTE_API_URL);
+
+      axios.get(process.env.VOTE_API_URL + '/user/1').then(
         res => {
           vm.user = res.data[0]
         })
@@ -71,7 +73,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import '../style/_variables.scss';
+@import '../../style/_variables.scss';
 .user_settings {
   margin-top: 3rem;
   text-align: center;

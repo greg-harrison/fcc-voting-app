@@ -6,7 +6,7 @@
 
 <script>
 import axios from 'axios'
-import MainButton from './reusable_components/main-button.vue'
+import MainButton from '../reusable_components/main-button.vue'
 
 export default {
   data: () => ({
@@ -19,7 +19,7 @@ export default {
     loadData: function() {
       const vm = this
 
-      axios.get(process.env.API_URL + '/user/1').then(
+      axios.get(process.env.VOTE_API_URL + '/user/1').then(
         res => {
           vm.user = res.data[0]
         })
@@ -61,7 +61,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import '../style/_variables.scss';
+@import '../../style/_variables.scss';
 .multi-poll {
   margin-top: 3rem;
   text-align: center;

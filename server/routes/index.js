@@ -3,6 +3,7 @@ const router = express.Router()
 
 router.use('/poll', require('./poll'))
 router.use('/user', require('./user'))
+router.use('/auth', require('./auth'))
 
 router.get('/', (req, res) => res.status(200).send(
   'Server is sending this to the front end! WOWIE!'

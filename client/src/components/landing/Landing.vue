@@ -18,12 +18,12 @@ export default {
   methods: {
     loadData: function() {
       const vm = this
-      axios.get('http://localhost:8081').then(
+      axios.get(process.env.VOTE_API_URL).then(
         response => {
           vm.results = response
         })
         .catch((error) => {
-          console.log('error', error);
+          // console.log('error', error);
         })
     },
   },
@@ -35,7 +35,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
-@import '../style/_variables.scss';
+@import '../../style/_variables.scss';
 .landing {
   margin-top: 3rem;
   text-align: center;

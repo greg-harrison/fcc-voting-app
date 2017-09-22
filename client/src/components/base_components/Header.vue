@@ -16,13 +16,18 @@
           </router-link>
         </li>
       </ul>
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <a href="#" v-on:click="login">
+            Login
+          </a>
+        </li>
+      </ul>
     </div>
   </nav>
 </template>
 
 <script>
-import axios from 'axios'
-import AuthService from './reusable_components/auth'
 
 export default {
   name: 'header',
@@ -36,9 +41,7 @@ export default {
   },
   methods: {
     login: function() {
-      const vm = this
-      const auth = new AuthService()
-      auth.login()
+      console.log('test')
     }
   },
   mounted() {
