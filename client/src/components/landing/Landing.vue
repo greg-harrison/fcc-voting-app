@@ -35,7 +35,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
-@import '../style/_variables.scss';
+@import '../../style/_variables.scss';
 .landing {
   margin-top: 3rem;
   text-align: center;

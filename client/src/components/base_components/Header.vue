@@ -28,7 +28,6 @@
 </template>
 
 <script>
-import AuthService from '../reusable_components/auth'
 
 export default {
   name: 'header',
@@ -42,10 +41,7 @@ export default {
   },
   methods: {
     login: function() {
-      const vm = this
-      console.log('hello');
-      const auth = new AuthService
-      auth.login()
+      console.log('test')
     }
   },
   mounted() {

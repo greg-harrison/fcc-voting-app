@@ -1,0 +1,19 @@
+.auth-card {
+  margin: 0 auto;
+  text-align: center;
+  .card {
+    max-width: 500px;
+    margin: 0 auto;
+    .card-header {
+      h2 {
+        margin-bottom: 0;
+      }
+      line-height: 1rem;
+      background-color: $blue;
+      color: $cream;
+    }
+    .card-body {
+      padding: 3rem 1rem;
+    }
+  }
+}
