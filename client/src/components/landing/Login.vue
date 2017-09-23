@@ -33,7 +33,6 @@ import axios from 'axios'
 export default {
   name: 'login',
   data: () => ({
-    msg: 'login',
     results: []
   }),
   methods: {

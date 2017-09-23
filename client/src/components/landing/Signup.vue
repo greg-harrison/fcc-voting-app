@@ -1,4 +1,4 @@
-<template>
+<template class="testing">
   <div class="auth-card signup container p-0">
     <div class="card">
       <div class="card-header">
@@ -9,9 +9,18 @@
           You need to sign up first.
         </p>
         <form @submit.prevent="signup">
-          <label><input v-model="email" placeholder="email"></label>
-          <label><input v-model="name" placeholder="name"></label>
-          <label><input v-model="pass" placeholder="password" type="password"></label> (hint: password1)<br>
+          <label class="d-block">
+            Email:
+            <input v-model="email" placeholder="email">
+          </label>
+          <label class="d-block">
+            Name:
+            <input v-model="name" placeholder="name">
+          </label>
+          <label class="d-block">
+            Password:
+            <input v-model="pass" placeholder="password" type="password">
+          </label>
           <p v-if="error" class="error">Bad login information</p>
         </form>
       </div>
@@ -28,7 +37,6 @@ import axios from 'axios'
 export default {
   name: 'signup',
   data: () => ({
-    msg: 'login',
     results: []
   }),
   methods: {
@@ -41,9 +49,17 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
 @import '../../style/_variables.scss';
+@import '../../style/reusable-component-styles/main-button.scss';
 @import '../../style/reusable-component-styles/auth-card.scss';
 
 .signup {
+  .testing {
+    background-color: blue;
+  }
+  form {
+    text-align: right;
+    width: 70%;
+  }
 }
 
 h1,
