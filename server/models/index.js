@@ -46,8 +46,12 @@ db.Sequelize = Sequelize
 
 // Import Models such that I can use them in the api just by importing 'db'
 db.poll = require('./poll')(sequelize, Sequelize)
+db.poll_option = require('./pollOption')(sequelize, Sequelize)
+db.poll_response = require('./pollResponse')(sequelize, Sequelize)
+
 db.user = require('./user')(sequelize, Sequelize)
 
-// db.poll.hasOne(db.user, { as: db.poll.user_id_created })
+db.poll.hasOne(db.user, { as: db.poll.user_id_created })
+
 
 module.exports = db
