@@ -1,5 +1,5 @@
 module.exports = function (sequelize, DataTypes) {
-  let poll = sequelize.define('poll', {
+  let poll = sequelize.define("poll", {
     poll_id: {
       type: DataTypes.INTEGER,
       primaryKey: true,

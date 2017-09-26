@@ -4,8 +4,6 @@
     <p>{{user.email}}</p>
     <main-button btn-text="Hello world" :onClick="testClick" btn-color="blue">
     </main-button>
-    <main-button btn-text="Hello world" :onClick="testClick" btn-color="cream" text-color="black">
-    </main-button>
   </div>
 </template>
 
@@ -29,7 +27,7 @@ export default {
       //  it doesn't allow access to THIS, thus breaking data-binding
       const vm = this
 
-      console.log('process.env.VOTE_API_URL', process.env.VOTE_API_URL);
+      console.log('what');
 
       axios.get(process.env.VOTE_API_URL + '/user/1').then(
         res => {

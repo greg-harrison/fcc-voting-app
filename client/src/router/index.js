@@ -10,16 +10,16 @@ import UserSettings from '@/components/user/UserSettings'
 
 Vue.use(Router)
 
-function requireAuth(to, from, next) {
-  if (!auth.loggedIn()) {
-    next({
-      path: '/login',
-      query: { redirect: to.fullPath }
-    })
-  } else {
-    next()
-  }
-}
+// function requireAuth(to, from, next) {
+//   if (!auth.loggedIn()) {
+//     next({
+//       path: '/login',
+//       query: { redirect: to.fullPath }
+//     })
+//   } else {
+//     next()
+//   }
+// }
 
 export default new Router({
   mode: 'history',
@@ -38,7 +38,7 @@ export default new Router({
         default: Landing,
         header: Header
       },
-      beforeEnter: requireAuth
+      // beforeEnter: requireAuth
     },
     {
       //user/:userId

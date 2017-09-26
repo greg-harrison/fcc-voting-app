@@ -1,5 +1,5 @@
 module.exports = function (sequelize, DataTypes) {
-  let user = sequelize.define('user', {
+  let user = sequelize.define("user", {
     user_id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
@@ -9,7 +9,7 @@ module.exports = function (sequelize, DataTypes) {
     email: DataTypes.STRING
   }, {
       freezeTableName: true,
-      tableName: 'user',
+      tableName: "user",
       timestamps: false
     });
 
