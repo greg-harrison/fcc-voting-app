@@ -1,6 +1,11 @@
 const mainController = require('./main')
 const DB = require('../models/')
 
+// another syntax that accomplishes the same this is
+// exports.createUser = (req, res) => {}
+// exports.getUser = (req, res) => {}
+// etc. 
+
 module.exports = {
   createUser: (req, res) => {
     let data = {
