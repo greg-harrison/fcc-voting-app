@@ -51,7 +51,12 @@ db.poll_response = require('./pollResponse')(sequelize, Sequelize)
 
 db.user = require('./user')(sequelize, Sequelize)
 
-db.poll.hasOne(db.user, { as: db.poll.user_id_created })
+
+// userCreatedIdPollId
+db.user.belongsTo(db.poll, { as: "user_id_created" }); // Adds roleId to user rather than userRoleId
+
+// poll hasOne user
+// user hasMany poll
 
 
 module.exports = db
