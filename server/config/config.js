@@ -1,3 +1,5 @@
+// Seems redundant to have this config object
+
 module.exports = {
   "development": {
     "username": process.env.VOTE_PG_USER,

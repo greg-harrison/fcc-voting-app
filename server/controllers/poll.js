@@ -1,6 +1,7 @@
 const mainController = require('./main')
 const DB = require('../models/')
 
+// Even when getting started, res.send something so that the server does not hang.
 module.exports = {
   getPoll: (req, res) => {
     console.log('req', req);

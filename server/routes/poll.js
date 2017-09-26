@@ -12,6 +12,8 @@ router.get('/create/', pollController.createPoll)
 
 router.put('/update/:poll_id', pollController.editPoll)
 
+// This route has a lot of params. Not a bad thing necessarily, but I usually limit them to 2.
+// Perhaps you can send over all the data you need in the request body.
 router.put('/respond/:poll_id/:response_id/:user_id/', pollController.respondToPoll)
 
 module.exports = router

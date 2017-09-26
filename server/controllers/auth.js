@@ -1,4 +1,5 @@
 const mainController = require('./main')
+// I believe this is a client-side module.
 const auth0 = require('auth0-js')
 
 module.exports = {
