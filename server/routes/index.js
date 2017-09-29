@@ -57,7 +57,6 @@ module.exports = router
 //     LEFT JOIN public."user" on public."user".user_id = poll_response.user_id
 // WHERE poll.poll_id = ID
 
-// + authenticateUser() -> not sure what auth0 uses for it's authenticated, more research needed
 // + logoutUser() -> userId* <submit the user's id and remove their window authtoken>
 // + getUserPolls() -> userId*
 // + getPollById() -> userId*, pollId* <getPollById will be the same route as getUserPolls, with pollId as an option param>
