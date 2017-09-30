@@ -1,48 +1,50 @@
-let promise = require('bluebird');
+const db = require('../db')
+const pgp = db.$config.pgp;
 
-let options = {
-  promiseLib: promise
-};
-
-let pgp = require('pg-promise')(options);
-let connectionString = process.env.PG_CONNECTION_URI;
-let db = pgp(connectionString);
-
-exports.createUser = (req, res) => {
-  let data = {
-    user_id: 2,
-    name: 'Greg Test',
-    email: 'harrison.test@gmail.com'
-  }
-  db.user.create(data).then((user) => {
-    console.log(user.get())
-  })
-  res.status(200)
+exports.createUser = (req, res, next) => {
+  // db.none checks to see that there doesn't already exist a record matching the criteria of the query
+  db.none('insert into public.user(name,email,password)' +
+    'values(${name},${email},${password})',
+    req.body)
+    .then(function () {
+      res.status(200)
+        .json({
+          status: 'success',
+          message: 'Inserted a user'
+        })
+    })
+    .catch(function (err) {
+      return next(err)
+    })
 }
+
 exports.getUser = (req, res, next) => {
-  var userId = parseInt(req.params.id);
-  db.one('select * from user where user_id = $1', userId)
+  var userId = parseInt(req.params.user_id);
+  db.one('select * from public.user where user_id = $1', userId)
     .then(function (data) {
       res.status(200)
         .json({
           status: 'success',
           data: data,
-          message: 'Retrieved ONE human'
+          message: 'Retrieved one user'
         });
     })
     .catch(function (err) {
       return next(err);
     });
-
-  // db.user.findAll({
-  //   where: ({
-  //     user_id: req.params.user_id
-  //   })
-  // }).then((user) => {
-  //   console.log('user', user);
-  //   console.log('res', res);
-  //   res.status(200).send(user);
-  // })
-  // console.log('res', res);
 }
 
+exports.getAllUsers = (req, res, next) => {
+  db.manyOrNone('select * from public.user')
+    .then(function (data) {
+      res.status(200)
+        .json({
+          status: 'success',
+          data: data,
+          message: 'Retrieved all users'
+        });
+    })
+    .catch(function (err) {
+      return next(err);
+    });
+}
