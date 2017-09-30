@@ -1,13 +1,5 @@
-let promise = require('bluebird');
-
-let options = {
-  promiseLib: promise
-};
-
-let pgp = require('pg-promise')(options);
-let connectionString = process.env.PG_CONNECTION_URI;
-let db = pgp(connectionString);
-
+const db = require('../db')
+const pgp = db.$config.pgp;
 
 exports.getPoll = (req, res) => {
   console.log('req', req);

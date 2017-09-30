@@ -1,12 +1,5 @@
-let promise = require('bluebird');
-
-let options = {
-  promiseLib: promise
-};
-
-let pgp = require('pg-promise')(options);
-let connectionString = process.env.PG_CONNECTION_URI;
-let db = pgp(connectionString);
+const db = require('../db')
+const pgp = db.$config.pgp;
 
 exports.createUser = (req, res) => {
   let data = {
@@ -20,8 +13,9 @@ exports.createUser = (req, res) => {
   res.status(200)
 }
 exports.getUser = (req, res, next) => {
-  var userId = parseInt(req.params.id);
-  db.one('select * from user where user_id = $1', userId)
+  console.log('req', req.params);
+  var userId = parseInt(req.params.user_id);
+  db.one('select * from public.user where user_id = $1', userId)
     .then(function (data) {
       res.status(200)
         .json({
