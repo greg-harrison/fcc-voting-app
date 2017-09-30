@@ -1,17 +1,17 @@
 const express = require('express')
 const router = express.Router()
-const pollController = require('../controllers/poll')
+const pollQueries = require('../queries/poll')
 
 // assume starts with /poll
-router.get('/:poll_id', pollController.getPoll)
+router.get('/:poll_id', pollQueries.getPoll)
 
-router.get('/list/:user_id', pollController.getUserCreatedPolls)
+router.get('/list/:user_id', pollQueries.getUserCreatedPolls)
 
-router.get('/responses/:poll_id', pollController.getPollResponses)
-router.get('/create/', pollController.createPoll)
+router.get('/responses/:poll_id', pollQueries.getPollResponses)
+router.get('/create/', pollQueries.createPoll)
 
-router.put('/update/:poll_id', pollController.editPoll)
+router.put('/update/:poll_id', pollQueries.editPoll)
 
-router.put('/respond/:poll_id/:response_id/:user_id/', pollController.respondToPoll)
+router.put('/respond/:poll_id/:response_id/:user_id/', pollQueries.respondToPoll)
 
 module.exports = router
