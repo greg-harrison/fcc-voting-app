@@ -36,6 +36,18 @@ export default {
     results: []
   }),
   methods: {
+    login: function() {
+      const vm = this
+
+      axios.get(process.env.VOTE_API_URL + '/user/1').then(
+        res => {
+          console.log('res', res);
+          vm.user = res.data.data
+        })
+        .catch((error) => {
+          console.log('error', error);
+        })
+    },
   },
   mounted() {
   }

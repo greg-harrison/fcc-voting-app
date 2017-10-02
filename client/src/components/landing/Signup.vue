@@ -8,24 +8,24 @@
         <p class="intro-text" v-if="$route.query.redirect">
           You need to sign up first.
         </p>
-        <form @submit.prevent="signup">
+        <form>
           <label class="d-block">
             Email:
-            <input v-model="email" placeholder="email">
+            <input v-model="userForm.email" placeholder="email">
           </label>
           <label class="d-block">
             Name:
-            <input v-model="name" placeholder="name">
+            <input v-model="userForm.name" placeholder="name">
           </label>
           <label class="d-block">
             Password:
-            <input v-model="pass" placeholder="password" type="password">
+            <input v-model="userForm.pass" placeholder="password" type="password">
           </label>
           <p v-if="error" class="error">Bad login information</p>
         </form>
       </div>
       <div class="card-footer">
-        <button class="btn btn-main" type="submit">Signup</button>
+        <button class="btn btn-main" @click.prevent="signup()" type="submit">Signup</button>
       </div>
     </div>
   </div>
@@ -37,9 +37,29 @@ import axios from 'axios'
 export default {
   name: 'signup',
   data: () => ({
-    results: []
+    userForm: {
+      name: '',
+      email: '',
+      password: ''
+    },
+    error: ''
   }),
   methods: {
+    signup: function() {
+      const _this = this
+      axios.post(process.env.VOTE_API_URL + '/user/create', {
+        name: _this.userForm.name,
+        email: _this.userForm.email,
+        password: _this.userForm.password
+      })
+        .then(function(response) {
+          console.log(response);
+        })
+        .catch(function(error) {
+          console.log(error);
+          _this.error = error
+        });
+    },
   },
   mounted() {
   }
