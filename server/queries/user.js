@@ -2,6 +2,7 @@ const db = require('../db')
 const pgp = db.$config.pgp;
 
 exports.createUser = (req, res, next) => {
+  console.log('req.body', req.body);
   // db.none checks to see that there doesn't already exist a record matching the criteria of the query
   db.none('insert into public.user(name,email,password)' +
     'values(${name},${email},${password})',
