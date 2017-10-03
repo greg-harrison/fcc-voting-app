@@ -1,22 +1,44 @@
 const db = require('../db')
 const pgp = db.$config.pgp;
+const Promise = require('bluebird')
+const bcrypt = Promise.promisifyAll(require('bcrypt'))
+const helpers = require('./helpers')
 
-exports.createUser = (req, res, next) => {
-  console.log('req', req);
-  console.log('req.body', req.body);
-  // db.none checks to see that there doesn't already exist a record matching the criteria of the query
+exports.createUser = async function (req, res, next) {
+  let uuid = helpers.createUUID()
+  let body = req.body
+  let hashedPass = await bcrypt.hashAsync(req.body.password, 16.5)
+  body.uuid = uuid
+  body.password = hashedPass
 
-  // TODO: Need to figure out how to generate a UNIQUE USER ID (uuid) for everything I insert
-
-  db.none('insert into public.user(user_id,name,email,password)' +
-    'values(3,${name},${email},${password})',
-    req.body)
+  db.none('insert into public.user(name,email,password,user_id)' +
+    'values(${name},${email},${password},${uuid})',
+    body)
     .then(function () {
       res.status(200)
         .json({
           status: 'success',
           message: 'Inserted a user'
         })
+    })
+    .catch(function (err) {
+      return next(err)
+    })
+}
+
+exports.loginUser = async function (req, res, next) {
+  let body = req.body
+
+  db.one('select * from public.user where email = $1', body.email)
+    .then(function (data) {
+      if (helpers.comparePass(body.password, data.password)) {
+        res.status(200)
+          .json({
+            status: 'success',
+            data: data,
+            message: 'Retrieved one authorized user'
+          });
+      }
     })
     .catch(function (err) {
       return next(err)
