@@ -11,15 +11,15 @@
         <form>
           <label class="d-block">
             Email:
-            <input v-model="userForm.email" placeholder="email">
+            <input v-model="credentials.email" placeholder="email">
           </label>
           <label class="d-block">
             Name:
-            <input v-model="userForm.name" placeholder="name">
+            <input v-model="credentials.name" placeholder="name">
           </label>
           <label class="d-block">
             Password:
-            <input v-model="userForm.pass" placeholder="password" type="password">
+            <input v-model="credentials.pass" placeholder="password" type="password">
           </label>
           <p v-if="error" class="error">Bad login information</p>
         </form>
@@ -32,12 +32,12 @@
 </template>
 
 <script>
-import axios from 'axios'
+import auth from '../../auth/'
 
 export default {
   name: 'signup',
   data: () => ({
-    userForm: {
+    credentials: {
       name: '',
       email: '',
       pass: ''
@@ -45,22 +45,15 @@ export default {
     error: ''
   }),
   methods: {
-    signup: function() {
-      const _this = this
-      console.log('_this.userForm', _this.userForm);
-      axios.post(process.env.VOTE_API_URL + '/user/create',
-        {
-          name: _this.userForm.name,
-          email: _this.userForm.email,
-          password: _this.userForm.pass
-        })
-        .then(function(response) {
-          console.log(response);
-        })
-        .catch(function(error) {
-          console.log(error);
-          _this.error = error
-        });
+    signup() {
+      let credentials = {
+        name: this.credentials.name,
+        email: this.credentials.email,
+        pass: this.credentials.pass,
+      }
+
+      auth.signup(this, credentials)
+
     },
   },
   mounted() {

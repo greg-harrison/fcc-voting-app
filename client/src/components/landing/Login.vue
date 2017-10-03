@@ -8,45 +8,47 @@
         <p class="intro-text" v-if="$route.query.redirect">
           You need to login first.
         </p>
-        <form @submit.prevent="login">
+        <form>
           <label class="d-block">
             Email:
-            <input v-model="email" placeholder="email">
+            <input v-model="credentials.email" placeholder="email">
           </label>
           <label class="d-block">
             Password:
-            <input v-model="pass" placeholder="password" type="password">
+            <input v-model="credentials.pass" placeholder="password" type="password">
           </label>
-          <p v-if="error" class="error">Bad login information</p>
+          <p v-if="error" class="error">
+            {{ error }}
+          </p>
         </form>
       </div>
       <div class="card-footer">
-        <button class="btn btn-main" type="submit">Login</button>
+        <button class="btn btn-main" @click.prevent="login()" type="submit">Login</button>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import axios from 'axios'
+import auth from '../../auth/'
 
 export default {
   name: 'login',
   data: () => ({
-    results: []
+    credentials: {
+      email: '',
+      pass: ''
+    },
+    error: ''
   }),
   methods: {
-    login: function() {
-      const vm = this
+    login() {
+      let credentials = {
+        email: this.credentials.email,
+        pass: this.credentials.pass
+      }
 
-      axios.get(process.env.VOTE_API_URL + '/user/1').then(
-        res => {
-          console.log('res', res);
-          vm.user = res.data.data
-        })
-        .catch((error) => {
-          console.log('error', error);
-        })
+      auth.login(this, credentials)
     },
   },
   mounted() {
