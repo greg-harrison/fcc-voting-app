@@ -40,18 +40,20 @@ export default {
     userForm: {
       name: '',
       email: '',
-      password: ''
+      pass: ''
     },
     error: ''
   }),
   methods: {
     signup: function() {
       const _this = this
-      axios.post(process.env.VOTE_API_URL + '/user/create', {
-        name: _this.userForm.name,
-        email: _this.userForm.email,
-        password: _this.userForm.password
-      })
+      console.log('_this.userForm', _this.userForm);
+      axios.post(process.env.VOTE_API_URL + '/user/create',
+        {
+          name: _this.userForm.name,
+          email: _this.userForm.email,
+          password: _this.userForm.pass
+        })
         .then(function(response) {
           console.log(response);
         })
