@@ -1,4 +1,5 @@
 const db = require('../db')
+const jwt = require('jsonwebtoken')
 const pgp = db.$config.pgp;
 const Promise = require('bluebird')
 const bcrypt = Promise.promisifyAll(require('bcrypt'))
@@ -14,12 +15,14 @@ exports.createUser = async function (req, res, next) {
   db.none('insert into public.user(name,email,password,user_id)' +
     'values(${name},${email},${password},${uuid})',
     body)
-    .then(function () {
+    .then(function (data) {
       res.status(200)
         .json({
           status: 'success',
           message: 'Inserted a user'
         })
+      data.password = undefined
+      return res.json(data)
     })
     .catch(function (err) {
       return next(err)
@@ -28,16 +31,18 @@ exports.createUser = async function (req, res, next) {
 
 exports.loginUser = async function (req, res, next) {
   let body = req.body
-
   db.one('select * from public.user where email = $1', body.email)
     .then(function (data) {
-      if (helpers.comparePass(body.password, data.password)) {
+      if (helpers.comparePass(body.pass, data.password)) {
         res.status(200)
           .json({
-            status: 'success',
-            data: data,
-            message: 'Retrieved one authorized user'
+            token: jwt.sign({ email: data.email, name: data.name, user_id: data.user_id }, 'RESTFULAPIs')
           });
+      } else {
+        res.status(403)
+          .json({
+            message: 'Authentication Failed. Wrong Password'
+          })
       }
     })
     .catch(function (err) {

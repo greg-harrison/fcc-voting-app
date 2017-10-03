@@ -22,6 +22,7 @@ app.use(logger('dev'))
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(middleware.malformedUrl)
+app.use(middleware.verifyUserAuth)
 app.use('/', routes)
 
 app.listen(port, () => {
