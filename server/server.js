@@ -3,6 +3,7 @@ const routes = require('./routes')
 const logger = require('morgan')
 const cors = require('cors')
 const middleware = require('./middleware')
+const bodyParser = require('body-parser')
 
 const port = process.env.VOTE_BE_PORT || 8081
 
@@ -18,6 +19,8 @@ let corsOptions = {
 
 app.use(cors(corsOptions));
 app.use(logger('dev'))
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 app.use(middleware.malformedUrl)
 app.use('/', routes)
 

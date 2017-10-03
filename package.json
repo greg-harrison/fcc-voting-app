@@ -9,6 +9,7 @@
     "setup": "yarn client-setup && yarn server-setup"
   },
   "dependencies": {
+    "body-parser": "^1.18.2",
     "dotenv-webpack": "^1.5.4"
   }
 }
