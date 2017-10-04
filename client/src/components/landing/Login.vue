@@ -49,6 +49,7 @@ export default {
       }
 
       auth.login(this, credentials)
+      // GO TO LANDING
     },
   },
   mounted() {

@@ -70,16 +70,4 @@ export default {
       'Authorization': 'Bearer ' + localStorage.getItem('id_token')
     }
   },
-
-  requireAuth(to, from, next) {
-    // TODO: Figure out why I cant access USER from this file
-    if (this.checkAuth) {
-      next({
-        path: '/login',
-        query: {
-          redirect: to.fullPath,
-        },
-      })
-    }
-  }
 }
