@@ -26,7 +26,7 @@ export default new Router({
         default: Landing,
         header: Header
       },
-      beforeEnter: auth.requireAuth
+      meta: { requiresAuth: true }
     },
     {
       //user/:userId
