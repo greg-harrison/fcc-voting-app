@@ -1,6 +1,6 @@
 const db = require('../db')
 const jwt = require('jsonwebtoken')
-const pgp = db.$config.pgp;
+const pgp = db.$config.pgp
 const Promise = require('bluebird')
 const bcrypt = Promise.promisifyAll(require('bcrypt'))
 const helpers = require('./helpers')
@@ -16,6 +16,10 @@ exports.createUser = async function (req, res, next) {
     'values(${name},${email},${password},${uuid})',
     body)
     .then(function (data) {
+
+      // TODO: RESPOND WITH A JWT - SAME AS LOGIN FUNC
+      // TODO: Add a Secret and get that working so I can actually salt these passwords and then unsalt them
+
       res.status(200)
         .json({
           status: 'success',
