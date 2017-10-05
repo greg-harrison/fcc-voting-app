@@ -1,1 +1,0 @@
-// For globals and such
