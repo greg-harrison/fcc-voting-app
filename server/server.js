@@ -4,6 +4,7 @@ const logger = require('morgan')
 const cors = require('cors')
 const middleware = require('./middleware')
 const bodyParser = require('body-parser')
+const passport = require('passport')
 
 const port = process.env.VOTE_BE_PORT || 8081
 
@@ -21,6 +22,9 @@ app.use(cors(corsOptions));
 app.use(logger('dev'))
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+app.use(passport.initialize())
+app.use(passport.session())
+
 app.use(middleware.malformedUrl)
 app.use(middleware.verifyUserAuth)
 app.use('/', routes)
