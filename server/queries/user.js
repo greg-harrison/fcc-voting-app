@@ -9,6 +9,10 @@ exports.createUser = async function (req, res, next) {
   let uuid = helpers.createUUID()
   let body = req.body
   let hashedPass = await bcrypt.hashAsync(req.body.password, 16.5)
+
+  // Investigate whether BCRYPT is necessary when using PASSPORT as authentication middleware.
+  // I'm assuming it uses a crypto library as a dependency
+
   body.uuid = uuid
   body.password = hashedPass
 
