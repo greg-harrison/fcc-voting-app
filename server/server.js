@@ -3,10 +3,14 @@ const routes = require('./routes')
 const logger = require('morgan')
 const cors = require('cors')
 const middleware = require('./middleware')
-const bodyParser = require('body-parser')
+
 const passport = require('passport')
+const bodyParser = require('body-parser')
+const cookieParser = require('cookie-parser')
+const session = require('express-session')
 
 const port = process.env.VOTE_BE_PORT || 8081
+
 
 const app = express()
 
@@ -22,6 +26,11 @@ app.use(cors(corsOptions));
 app.use(logger('dev'))
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+app.use(cookieParser())
+
+// passport set-up
+console.log('process.env.VOTE_PASSPORT_SECRET', process.env.VOTE_PASSPORT_SECRET);
+app.use(session({ secret: process.env.VOTE_PASSPORT_SECRET }))
 app.use(passport.initialize())
 app.use(passport.session())
 
