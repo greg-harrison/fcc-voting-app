@@ -1,17 +1,19 @@
 const db = require('../db')
 const jwt = require('jsonwebtoken')
 const pgp = db.$config.pgp
-const Promise = require('bluebird')
-const bcrypt = Promise.promisifyAll(require('bcrypt'))
+const bcrypt = require('bcryptjs')
 const helpers = require('./helpers')
 
 exports.createUser = async function (req, res, next) {
+  console.log('req', req.body);
   let uuid = helpers.createUUID()
   let body = req.body
-  let hashedPass = await bcrypt.hashAsync(req.body.password, 16.5)
+  let hashedPass = await bcrypt.hashSync(req.body.pass, 16.5)
 
   // Investigate whether BCRYPT is necessary when using PASSPORT as authentication middleware.
   // I'm assuming it uses a crypto library as a dependency
+
+  // Figure out why this request runs forever
 
   body.uuid = uuid
   body.password = hashedPass
@@ -20,14 +22,12 @@ exports.createUser = async function (req, res, next) {
     'values(${name},${email},${password},${uuid})',
     body)
     .then(function (data) {
-
-      // TODO: RESPOND WITH A JWT - SAME AS LOGIN FUNC
-      // TODO: Add a Secret and get that working so I can actually salt these passwords and then unsalt them
-
       res.status(200)
         .json({
-          status: 'success',
-          message: 'Inserted a user'
+          token: jwt.sign(
+            { email: body.email, name: body.name, user_id: body.uuid },
+            process.env.VOTE_BCRYPT_SECRET
+          )
         })
       data.password = undefined
       return res.json(data)
@@ -44,7 +44,10 @@ exports.loginUser = async function (req, res, next) {
       if (helpers.comparePass(body.pass, data.password)) {
         res.status(200)
           .json({
-            token: jwt.sign({ email: data.email, name: data.name, user_id: data.user_id }, 'RESTFULAPIs')
+            token: jwt.sign(
+              { email: data.email, name: data.name, user_id: data.user_id },
+              process.env.VOTE_BCRYPT_SECRET
+            )
           });
       } else {
         res.status(403)
