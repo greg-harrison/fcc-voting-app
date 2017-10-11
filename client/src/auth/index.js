@@ -43,7 +43,6 @@ export default {
         if (redirect) {
           router.go(redirect)
         }
-        console.log('this.user.authenticated', this.user.authenticated);
       })
       .catch(function (error) {
         _this.error = error

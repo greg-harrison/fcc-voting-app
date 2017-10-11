@@ -4,16 +4,11 @@ const pgp = db.$config.pgp
 const bcrypt = require('bcryptjs')
 const helpers = require('./helpers')
 
-exports.createUser = async function (req, res, next) {
+exports.createUser = function (req, res, next) {
   console.log('req', req.body);
   let uuid = helpers.createUUID()
   let body = req.body
-  let hashedPass = await bcrypt.hashSync(req.body.pass, 16.5)
-
-  // Investigate whether BCRYPT is necessary when using PASSPORT as authentication middleware.
-  // I'm assuming it uses a crypto library as a dependency
-
-  // Figure out why this request runs forever
+  let hashedPass = bcrypt.hashSync(req.body.pass, 10)
 
   body.uuid = uuid
   body.password = hashedPass
@@ -29,7 +24,6 @@ exports.createUser = async function (req, res, next) {
             process.env.VOTE_BCRYPT_SECRET
           )
         })
-      data.password = undefined
       return res.json(data)
     })
     .catch(function (err) {
