@@ -9,7 +9,7 @@ import Signup from '@/components/landing/signup'
 import UserSettings from '@/components/user/UserSettings'
 
 Vue.use(Router)
-export default new Router({
+const router = new Router({
   mode: 'history',
   routes: [
     {
@@ -38,3 +38,22 @@ export default new Router({
     }
   ]
 })
+
+router.beforeEach((to, from, next) => {
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    if (!auth.user.authenticated) {
+      next({
+        path: '/login',
+        query: {
+          redirect: to.fullPath
+        }
+      })
+    } else {
+      next()
+    }
+  } else {
+    next()
+  }
+})
+
+export default router

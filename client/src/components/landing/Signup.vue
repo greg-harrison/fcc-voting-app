@@ -52,7 +52,7 @@ export default {
         pass: this.credentials.pass,
       }
 
-      auth.signup(this, credentials)
+      auth.signup(this, credentials, '/')
 
     },
   },

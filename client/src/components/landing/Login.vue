@@ -48,7 +48,7 @@ export default {
         pass: this.credentials.pass
       }
 
-      auth.login(this, credentials)
+      auth.login(this, credentials, '/')
       // GO TO LANDING
     },
   },
