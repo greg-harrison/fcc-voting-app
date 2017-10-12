@@ -14,11 +14,13 @@ export default {
   login(context, credentials, redirect) {
     const _this = context
     let auth = this
+
     axios.post(
       LOGIN_URL,
       credentials)
       .then(function (res) {
         localStorage.setItem('id_token', res.data.token)
+
         auth.user.authenticated = true
 
         if (redirect) {
@@ -38,6 +40,7 @@ export default {
       credentials)
       .then(function (res) {
         localStorage.setItem('id_token', res.data.token)
+
         auth.user.authenticated = true
 
         if (redirect) {
