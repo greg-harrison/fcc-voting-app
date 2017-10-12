@@ -17,9 +17,14 @@
         </li>
       </ul>
       <ul class="navbar-nav mr-auto">
-        <li class="nav-item">
+        <li v-if="!user.isLoggedIn" class="nav-item">
           <a href="#" v-on:click="login">
             Login
+          </a>
+        </li>
+        <li v-if="user.isLoggedIn" class="nav-item">
+          <a href="#" v-on:click="logout">
+            Logout
           </a>
         </li>
       </ul>
@@ -28,6 +33,7 @@
 </template>
 
 <script>
+import auth from '../../auth/'
 
 export default {
   name: 'header',
@@ -35,13 +41,17 @@ export default {
     return {
       currentRoute: this.$route.fullPath,
       user: {
-        name: null
-      }
+        name: null,
+        isLoggedIn: auth.user.authenticated
+      },
     }
   },
   methods: {
     login: function() {
       console.log('test')
+    },
+    logout: function() {
+      auth.logout('/')
     }
   },
   mounted() {

@@ -44,7 +44,7 @@ export default {
         auth.user.authenticated = true
 
         if (redirect) {
-          router.go(redirect)
+          router.push(redirect)
         }
       })
       .catch(function (error) {
@@ -52,10 +52,13 @@ export default {
       });
   },
 
-  logout() {
+  logout(redirect) {
     let auth = this
     localStorage.removeItem('id_token')
     auth.user.authenticated = false
+    if (redirect) {
+      router.push(redirect)
+    }
   },
 
   checkAuth() {
