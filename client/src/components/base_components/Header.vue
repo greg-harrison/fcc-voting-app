@@ -18,9 +18,9 @@
       </ul>
       <ul class="navbar-nav mr-auto">
         <li v-if="!user.isLoggedIn" class="nav-item">
-          <a href="#" v-on:click="login">
+          <router-link to="/login">
             Login
-          </a>
+          </router-link>
         </li>
         <li v-if="user.isLoggedIn" class="nav-item">
           <a href="#" v-on:click="logout">

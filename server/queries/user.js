@@ -5,7 +5,6 @@ const bcrypt = require('bcryptjs')
 const helpers = require('./helpers')
 
 exports.createUser = function (req, res, next) {
-  console.log('req', req.body);
   let uuid = helpers.createUUID()
   let body = req.body
   let hashedPass = bcrypt.hashSync(req.body.pass, 10)

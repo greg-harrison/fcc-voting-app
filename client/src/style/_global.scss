@@ -1,5 +1,9 @@
 @import './_variables.scss';
 
+html, body, #app {
+  height: 100%;
+}
+
 //Generates override for text color
 // s3-c-$colorname
 @each $i in $colors {

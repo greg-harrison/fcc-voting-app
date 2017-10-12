@@ -30,7 +30,12 @@ app.use(cookieParser())
 
 // passport set-up
 console.log('process.env.VOTE_PASSPORT_SECRET', process.env.VOTE_PASSPORT_SECRET);
-app.use(session({ secret: process.env.VOTE_PASSPORT_SECRET }))
+app.use(session({
+  secret: process.env.VOTE_PASSPORT_SECRET,
+  resave: false,
+  saveUninitialized: true
+}))
+
 app.use(passport.initialize())
 app.use(passport.session())
 
