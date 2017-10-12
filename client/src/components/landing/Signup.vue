@@ -1,4 +1,4 @@
-<template class="testing">
+<template>
   <div class="auth-card signup container p-0">
     <div class="card">
       <div class="card-header">
@@ -22,6 +22,12 @@
             <input v-model="credentials.pass" placeholder="password" type="password">
           </label>
           <p v-if="error" class="error">Bad login information</p>
+          <small>
+            Already have an account?
+            <router-link to="login">
+              Log In
+            </router-link>
+          </small>
         </form>
       </div>
       <div class="card-footer">

@@ -17,10 +17,16 @@
             Password:
             <input v-model="credentials.pass" placeholder="password" type="password">
           </label>
-          <p v-if="error" class="error">
-            {{ error }}
-          </p>
         </form>
+        <p v-if="error" class="error">
+          {{ error }}, please try again
+        </p>
+        <small>
+          Don't have an account?
+          <router-link to="signup">
+            Sign Up
+          </router-link>
+        </small>
       </div>
       <div class="card-footer">
         <button class="btn btn-main" @click.prevent="login()" type="submit">Login</button>
@@ -68,6 +74,9 @@ export default {
   form {
     text-align: right;
     width: 70%;
+  }
+  .error {
+    color: red;
   }
 }
 

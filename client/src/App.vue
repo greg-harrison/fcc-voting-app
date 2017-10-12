@@ -12,7 +12,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import './style/_variables.scss';
+@import './style/_global.scss';
 
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
@@ -23,6 +23,14 @@ export default {
 html,
 body {
   background-color: $cream !important;
+}
+
+.auth-card {
+  overflow: visible;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
 }
 
 .p-0 {

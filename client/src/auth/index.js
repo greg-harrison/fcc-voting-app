@@ -28,7 +28,7 @@ export default {
         }
       })
       .catch(function (error) {
-        _this.error = error
+        _this.error = error.response.data.message
       });
   },
 
@@ -48,7 +48,7 @@ export default {
         }
       })
       .catch(function (error) {
-        _this.error = error
+        _this.error = error.response.message
       });
   },
 
