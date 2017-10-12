@@ -27,9 +27,9 @@ export default {
         })
     },
   },
-  mounted() {
-    this.loadData()
-  }
+  // mounted() {
+  //   this.loadData()
+  // }
 }
 </script>
 

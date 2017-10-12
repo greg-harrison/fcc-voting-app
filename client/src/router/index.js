@@ -40,7 +40,9 @@ const router = new Router({
 })
 
 router.beforeEach((to, from, next) => {
+  console.log('checking path');
   if (to.matched.some(record => record.meta.requiresAuth)) {
+    auth.checkAuth()
     if (!auth.user.authenticated) {
       next({
         path: '/login',

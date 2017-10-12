@@ -14,11 +14,13 @@ export default {
   login(context, credentials, redirect) {
     const _this = context
     let auth = this
+
     axios.post(
       LOGIN_URL,
       credentials)
       .then(function (res) {
         localStorage.setItem('id_token', res.data.token)
+
         auth.user.authenticated = true
 
         if (redirect) {
@@ -38,10 +40,11 @@ export default {
       credentials)
       .then(function (res) {
         localStorage.setItem('id_token', res.data.token)
+
         auth.user.authenticated = true
 
         if (redirect) {
-          router.go(redirect)
+          router.push(redirect)
         }
       })
       .catch(function (error) {
@@ -49,10 +52,13 @@ export default {
       });
   },
 
-  logout() {
+  logout(redirect) {
     let auth = this
     localStorage.removeItem('id_token')
     auth.user.authenticated = false
+    if (redirect) {
+      router.push(redirect)
+    }
   },
 
   checkAuth() {
