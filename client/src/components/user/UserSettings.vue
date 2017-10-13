@@ -2,43 +2,21 @@
   <div class="user_settings container p-0">
     <h1>Hello {{user.name}}</h1>
     <p>{{user.email}}</p>
-    <main-button btn-text="Hello world" :onClick="testClick" btn-color="blue">
-    </main-button>
   </div>
 </template>
 
 <script>
 import axios from 'axios'
-import MainButton from '../reusable_components/main-button.vue'
+import auth from '../../auth/'
 
 export default {
   data: () => ({
     user: {
-      name: '',
-      email: ''
+      name: auth.user.user_detail.name,
+      email: auth.user.user_detail.email
     }
   }),
-  components: {
-    MainButton
-  },
   methods: {
-    loadData: function() {
-      // Shouldn't use fat-arrow (=>) functions on methods
-      //  it doesn't allow access to THIS, thus breaking data-binding
-      const vm = this
-
-      axios.get(process.env.VOTE_API_URL + '/user/1').then(
-        res => {
-          console.log('res', res);
-          vm.user = res.data.data
-        })
-        .catch((error) => {
-          console.log('error', error);
-        })
-    },
-    testClick() {
-      console.log('click from parent');
-    }
   },
 
   beforeCreate() {
@@ -46,7 +24,6 @@ export default {
   },
   created() {
     console.log('created')
-    this.loadData()
   },
   beforeMount() {
     console.log('beforeMount')

@@ -7,6 +7,8 @@ import Landing from '@/components/landing/Landing'
 import Login from '@/components/landing/login'
 import Signup from '@/components/landing/signup'
 import UserSettings from '@/components/user/UserSettings'
+import ShowPolls from '@/components/polls/MultiPollDisplay'
+import PollCreate from '@/components/polls/PollCreate'
 
 Vue.use(Router)
 const router = new Router({
@@ -29,18 +31,34 @@ const router = new Router({
       meta: { requiresAuth: true }
     },
     {
+      path: '/poll',
+      components: {
+        default: Landing,
+        header: Header
+      },
+      meta: { requiresAuth: true }
+    },
+    {
+      path: '/poll/create',
+      components: {
+        default: PollCreate,
+        header: Header
+      },
+      meta: { requiresAuth: true }
+    },
+    {
       //user/:userId
       path: '/user',
       components: {
         default: UserSettings,
         header: Header
-      }
+      },
+      meta: { requiresAuth: true }
     }
   ]
 })
 
 router.beforeEach((to, from, next) => {
-  console.log('checking path');
   if (to.matched.some(record => record.meta.requiresAuth)) {
     auth.checkAuth()
     if (!auth.user.authenticated) {

@@ -4,10 +4,6 @@ const router = express.Router()
 router.use('/poll', require('./poll'))
 router.use('/user', require('./user'))
 
-router.get('/', (req, res) => res.status(200).send(
-  'Server is sending this to the front end! WOWIE!'
-))
-
 module.exports = router
 
 // Getting the list of options for a poll in POSTGRES

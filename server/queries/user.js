@@ -16,12 +16,14 @@ exports.createUser = function (req, res, next) {
     'values(${name},${email},${password},${uuid})',
     body)
     .then(function (data) {
+      body.password = null
       res.status(200)
         .json({
           token: jwt.sign(
             { email: body.email, name: body.name, user_id: body.uuid },
             process.env.VOTE_BCRYPT_SECRET
-          )
+          ),
+          user: body
         })
       return res.json(data)
     })
@@ -35,12 +37,14 @@ exports.loginUser = function (req, res, next) {
   db.one('select * from public.user where email = $1', body.email)
     .then(function (data) {
       if (helpers.comparePass(body.pass, data.password)) {
+        data.password = null
         res.status(200)
           .json({
             token: jwt.sign(
               { email: data.email, name: data.name, user_id: data.user_id },
               process.env.VOTE_BCRYPT_SECRET
-            )
+            ),
+            user: data
           });
       } else {
         res.status(403)
@@ -55,9 +59,10 @@ exports.loginUser = function (req, res, next) {
 }
 
 exports.getUser = (req, res, next) => {
-  var userId = parseInt(req.params.user_id);
+  var userId = req.params.user_id;
   db.one('select * from public.user where user_id = $1', userId)
     .then(function (data) {
+      data.password = null
       res.status(200)
         .json({
           status: 'success',

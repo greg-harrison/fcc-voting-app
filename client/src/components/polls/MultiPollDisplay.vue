@@ -18,9 +18,6 @@ export default {
   methods: {
     loadData: function() {
       const vm = this
-
-      console.log(process.env.VOTE_API_URL)
-      console.log('hello world')
       axios.get(process.env.VOTE_API_URL + '/user/1').then(
         res => {
           vm.user = res.data[0]

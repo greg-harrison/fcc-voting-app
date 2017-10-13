@@ -16,14 +16,14 @@
           </router-link>
         </li>
       </ul>
-      <ul class="navbar-nav mr-auto">
+      <ul class="navbar-nav">
         <li v-if="!user.isLoggedIn" class="nav-item">
-          <router-link to="/login">
+          <router-link to="/login" exact tag="a" class="nav-link">
             Login
           </router-link>
         </li>
         <li v-if="user.isLoggedIn" class="nav-item">
-          <a href="#" v-on:click="logout">
+          <a v-on:click="logout" class="nav-link">
             Logout
           </a>
         </li>
@@ -41,15 +41,12 @@ export default {
     return {
       currentRoute: this.$route.fullPath,
       user: {
-        name: null,
+        name: auth.user.user_detail.name,
         isLoggedIn: auth.user.authenticated
       },
     }
   },
   methods: {
-    login: function() {
-      console.log('test')
-    },
     logout: function() {
       auth.logout('/')
     }
