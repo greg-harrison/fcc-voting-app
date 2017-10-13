@@ -2,30 +2,25 @@
   <div class="auth-card signup container p-0">
     <div class="card">
       <div class="card-header">
-        <h2>Sign Up</h2>
+        <router-link to="/" exact tag="h2">
+          Voute
+        </router-link>
       </div>
       <div class="card-body">
-        <p class="intro-text" v-if="$route.query.redirect">
-          You need to sign up first.
-        </p>
         <form>
           <label class="d-block">
-            Email:
             <input v-model="credentials.email" placeholder="email">
           </label>
           <label class="d-block">
-            Name:
             <input v-model="credentials.name" placeholder="name">
           </label>
           <label class="d-block">
-            Password:
             <input v-model="credentials.pass" placeholder="password" type="password">
           </label>
           <p v-if="error" class="error">Bad login information</p>
           <small>
-            Already have an account?
-            <router-link to="login">
-              Log In
+            <router-link to="login" class="auth-link">
+              Already have an account?
             </router-link>
           </small>
         </form>
@@ -76,10 +71,6 @@ export default {
 .signup {
   .testing {
     background-color: blue;
-  }
-  form {
-    text-align: right;
-    width: 70%;
   }
 }
 

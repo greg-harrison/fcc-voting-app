@@ -11,3 +11,10 @@ exports.createUUID = () => {
     return v.toString(16);
   });
 }
+
+exports.loginRequired = (req, res, next) => {
+  if (!req.params.user_id) {
+    return res.status(401).json({ status: 'Please log in' })
+  }
+  return next()
+}

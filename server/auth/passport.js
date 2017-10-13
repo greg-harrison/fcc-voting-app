@@ -5,7 +5,7 @@ const pgp = db.$config.pgp
 module.exports = () => {
 
   passport.serializeUser((user, done) => {
-    done(null, user.id)
+    done(null, user.user_id)
   })
 
   passport.deserializeUser((id, done) => {

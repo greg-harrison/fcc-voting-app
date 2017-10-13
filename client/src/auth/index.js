@@ -8,7 +8,14 @@ const SIGNUP_URL = API_URL + '/user/create'
 export default {
 
   user: {
-    authenticated: false
+    authenticated: false,
+    user_detail: {}
+  },
+
+  parseJwt(token) {
+    var base64Url = token.split('.')[1];
+    var base64 = base64Url.replace('-', '+').replace('_', '/');
+    return JSON.parse(window.atob(base64));
   },
 
   login(context, credentials, redirect) {
@@ -22,9 +29,10 @@ export default {
         localStorage.setItem('id_token', res.data.token)
 
         auth.user.authenticated = true
+        auth.user.user_detail = res.data.user
 
         if (redirect) {
-          router.go(redirect)
+          router.push(redirect)
         }
       })
       .catch(function (error) {
@@ -42,6 +50,7 @@ export default {
         localStorage.setItem('id_token', res.data.token)
 
         auth.user.authenticated = true
+        auth.user.user_detail = res.data.user
 
         if (redirect) {
           router.push(redirect)
@@ -56,7 +65,9 @@ export default {
     let auth = this
     localStorage.removeItem('id_token')
     auth.user.authenticated = false
-    if (redirect) {
+    auth.user.user_detail = {}
+
+    if (redirect && !auth.user.authenticated) {
       router.push(redirect)
     }
   },
@@ -65,6 +76,7 @@ export default {
     let jwt = localStorage.getItem('id_token')
     if (jwt) {
       this.user.authenticated = true
+      this.user.user_detail = this.parseJwt(jwt)
     } else {
       this.user.authenticated = false
     }

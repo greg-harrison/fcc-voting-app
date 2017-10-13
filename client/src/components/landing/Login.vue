@@ -2,19 +2,19 @@
   <div class="auth-card login container p-0">
     <div class="card">
       <div class="card-header">
-        <h2>Login</h2>
+        <router-link to="/" exact tag="h2">
+          Voute
+        </router-link>
       </div>
       <div class="card-body">
-        <p class="intro-text" v-if="$route.query.redirect">
-          You need to login first.
-        </p>
+        <!-- <p class="intro-text" v-if="$route.query.redirect">
+                              You need to login first.
+                            </p> -->
         <form>
           <label class="d-block">
-            Email:
             <input v-model="credentials.email" placeholder="email">
           </label>
           <label class="d-block">
-            Password:
             <input v-model="credentials.pass" placeholder="password" type="password">
           </label>
         </form>
@@ -22,9 +22,8 @@
           {{ error }}, please try again
         </p>
         <small>
-          Don't have an account?
-          <router-link to="signup">
-            Sign Up
+          <router-link to="signup" class="auth-link">
+            Don't have an account?
           </router-link>
         </small>
       </div>
@@ -71,10 +70,6 @@ export default {
 @import '../../style/reusable-component-styles/auth-card.scss';
 
 .login {
-  form {
-    text-align: right;
-    width: 70%;
-  }
   .error {
     color: red;
   }
