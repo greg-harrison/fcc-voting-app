@@ -1,6 +1,23 @@
 <template>
-  <div>
-    <h3>Hello world</h3>
+  <div class="poll create container p-0">
+    <div class="card">
+      <div class="card-header">
+        Hello
+      </div>
+      <div class="card-body">
+        <form>
+          <label class="d-block">
+            <input v-model="credentials.question" placeholder="question">
+          </label>
+        </form>
+        <p v-if="error" class="error">
+          {{ error }}, please try again
+        </p>
+      </div>
+      <div class="card-footer">
+        <button class="btn btn-main" @click.prevent="login()" type="submit">Login</button>
+      </div>
+    </div>
   </div>
 </template>
 
