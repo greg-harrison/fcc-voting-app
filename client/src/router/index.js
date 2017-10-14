@@ -25,24 +25,24 @@ const router = new Router({
     {
       path: '/',
       components: {
-        default: Landing,
-        header: Header
+        header: Header,
+        default: Landing
       },
       meta: { requiresAuth: true }
     },
     {
       path: '/poll',
       components: {
-        default: Landing,
-        header: Header
+        header: Header,
+        default: Landing
       },
       meta: { requiresAuth: true }
     },
     {
       path: '/poll/create',
       components: {
-        default: PollCreate,
-        header: Header
+        header: Header,
+        default: PollCreate
       },
       meta: { requiresAuth: true }
     },
@@ -50,8 +50,8 @@ const router = new Router({
       //user/:userId
       path: '/user',
       components: {
-        default: UserSettings,
-        header: Header
+        header: Header,
+        default: UserSettings
       },
       meta: { requiresAuth: true }
     }
