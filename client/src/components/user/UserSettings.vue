@@ -2,6 +2,9 @@
   <div class="user_settings container p-0">
     <h1>Hello {{user.name}}</h1>
     <p>{{user.email}}</p>
+    <router-link to="user/polls">
+      Go To My Polls
+    </router-link>
   </div>
 </template>
 

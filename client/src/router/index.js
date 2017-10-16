@@ -10,6 +10,7 @@ import UserSettings from '@/components/user/UserSettings'
 import ShowPolls from '@/components/polls/MultiPollDisplay'
 import PollView from '@/components/polls/PollDisplay'
 import PollCreate from '@/components/polls/PollCreate'
+import UserPolls from '@/components/user/UserPolls'
 
 Vue.use(Router)
 const router = new Router({
@@ -53,6 +54,15 @@ const router = new Router({
       components: {
         header: Header,
         default: UserSettings
+      },
+      meta: { requiresAuth: true }
+    },
+    {
+      //user/:userId
+      path: '/user/polls',
+      components: {
+        header: Header,
+        default: UserPolls
       },
       meta: { requiresAuth: true }
     }
