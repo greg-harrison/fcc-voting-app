@@ -8,6 +8,7 @@ import Login from '@/components/landing/login'
 import Signup from '@/components/landing/signup'
 import UserSettings from '@/components/user/UserSettings'
 import ShowPolls from '@/components/polls/MultiPollDisplay'
+import PollView from '@/components/polls/PollDisplay'
 import PollCreate from '@/components/polls/PollCreate'
 
 Vue.use(Router)
@@ -34,7 +35,7 @@ const router = new Router({
       path: '/poll',
       components: {
         header: Header,
-        default: Landing
+        default: PollView
       },
       meta: { requiresAuth: true }
     },
