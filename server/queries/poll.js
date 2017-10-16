@@ -2,7 +2,7 @@ const db = require('../db')
 const pgp = db.$config.pgp;
 
 exports.getPoll = (req, res, next) => {
-  var pollId = req.params.poll_id;
+  let pollId = req.params.poll_id;
   db.any(
     `SELECT
       public.poll.poll_id,
@@ -15,8 +15,8 @@ exports.getPoll = (req, res, next) => {
     FROM
   	  public.poll
     INNER JOIN public.poll_option ON public.poll.poll_id = public.poll_option.poll_id
-    WHERE public.poll.poll_id = $1
-    `, pollId)
+    WHERE public.poll.poll_id = $1`,
+    pollId)
     .then(function (data) {
       res.status(200)
         .json({
@@ -28,16 +28,33 @@ exports.getPoll = (req, res, next) => {
     .catch(function (err) {
       return next(err);
     });
-
-  res.status(200)
 }
+
+exports.getUserCreatedPolls = (req, res, next) => {
+  let userId = req.params.user_id;
+
+  db.any(
+    `SELECT * FROM public.poll
+    WHERE public.poll.user_id_created = $1`,
+    userId
+  )
+    .then(function (data) {
+      res.status(200)
+        .json({
+          status: 'success',
+          data: data,
+          message: 'Retrieved user polls'
+        })
+    })
+    .catch(function (err) {
+      return next(err)
+    })
+}
+
 exports.getPollResponses = (req, res) => {
   console.log('req', req);
   console.log('res', res);
 
-  res.status(200)
-}
-exports.getUserCreatedPolls = (req, res) => {
   res.status(200)
 }
 
