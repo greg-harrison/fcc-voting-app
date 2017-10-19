@@ -1,8 +1,10 @@
 import axios from 'axios'
+import auth from '../auth/'
 
 const API_URL = process.env.VOTE_API_URL
 const POLL_URL = API_URL + '/poll'
 const USER_CREATED_POLL_LIST_URL = POLL_URL + '/list'
+const USER_CREATE_POLL_URL = POLL_URL + '/create'
 
 export default {
 
@@ -29,6 +31,29 @@ export default {
       .then(function (res) {
         console.log('res', res);
         _this.user.polls = res.data.data
+      })
+      .catch(function (error) {
+        _this.error = error.response.data.message
+      });
+  },
+
+  createPoll(context, credentials, redirect) {
+
+    const _this = context
+
+    let body = credentials
+
+    let config = {
+      headers: auth.getAuthHeader()
+    }
+
+    axios.post(USER_CREATE_POLL_URL, body, config)
+      .then(function (res) {
+        // check for success value from Backend
+        // Start using POSTMAN
+        console.log('res.data.success', res.data.success);
+
+        console.log('res.data', res.data);
       })
       .catch(function (error) {
         _this.error = error.response.data.message

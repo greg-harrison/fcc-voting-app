@@ -25,7 +25,7 @@ let corsOptions = {
 app.use(cors(corsOptions));
 app.use(logger('dev'))
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
+app.use(bodyParser.json('*/*'));
 app.use(cookieParser())
 
 // passport set-up

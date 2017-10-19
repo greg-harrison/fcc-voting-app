@@ -16,7 +16,7 @@ exports.malformedUrl = (req, res, next) => {
 }
 
 exports.verifyUserAuth = (req, res, next) => {
-  if (req.headers && req.headers.authorization && req.headers.authorization.split(' ')[0] === 'JWT') {
+  if (req.headers && req.headers.authorization && req.headers.authorization.split(' ')[0] === 'Bearer') {
     jsonwebtoken.verify(req.headers.authorization.split(' ')[1], process.env.VOTE_BCRYPT_SECRET
       , function (err, decode) {
         if (err) req.data = undefined

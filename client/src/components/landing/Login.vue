@@ -8,8 +8,8 @@
       </div>
       <div class="card-body">
         <!-- <p class="intro-text" v-if="$route.query.redirect">
-                              You need to login first.
-                            </p> -->
+                                You need to login first.
+                              </p> -->
         <form>
           <label class="d-block">
             <input v-model="credentials.email" placeholder="email">
