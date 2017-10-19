@@ -46,6 +46,7 @@ import {
 export default {
   data: () => ({
     poll: {
+      // Change to options?
       inputs: [
         {
           option: ''
@@ -93,7 +94,8 @@ export default {
       this.errors = errors
     },
     create() {
-      this.validate()
+      this.validate
+
       if (!isEmpty(this.errors)) {
         console.log('has errors');
       } else {

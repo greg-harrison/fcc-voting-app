@@ -61,27 +61,32 @@ exports.getPollResponses = (req, res) => {
 exports.createPoll = function (req, res, next) {
   // Get Creators UserId
 
-  let uuid = helpers.createUUID()
+  // let uuid = helpers.createUUID()
   let body = req.body
-  body.uuid = uuid
+  // body.uuid = uuid
   body.createdDate = new Date()
 
-  // Insert into a JOIN if that's possible?
+  const { title, options } = req.body
+  // From Form
 
-  db.none('insert into poll(poll_id,question,date,user_id)' +
-    'values(${poll_id},${question},${createdDate},${user_id})',
-    body)
-    .then(function (data) {
-      body.password = null
-      res.status(200)
-        .json({
-          body
-        })
-      return res.json(data)
-    })
-    .catch(function (err) {
-      return next(err)
-    })
+  res.send(req.body)
+
+  // // Writing to 2 tables at once
+
+  // db.none('insert into poll(poll_id,question,date,user_id)' +
+  //   'values(${poll_id},${question},${createdDate},${user_id})',
+  //   body)
+  //   .then(function (data) {
+  //     body.password = null
+  //     res.status(200)
+  //       .json({
+  //         body
+  //       })
+  //     return res.json(data)
+  //   })
+  //   .catch(function (err) {
+  //     return next(err)
+  //   })
 }
 
 exports.editPoll = (req, res) => {
