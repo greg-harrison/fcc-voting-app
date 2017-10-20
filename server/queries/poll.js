@@ -1,5 +1,6 @@
 const db = require('../db')
 const pgp = db.$config.pgp;
+const helpers = require('./helpers')
 
 exports.getPoll = (req, res, next) => {
   let pollId = req.params.poll_id;
@@ -52,18 +53,17 @@ exports.getUserCreatedPolls = (req, res, next) => {
 }
 
 exports.getPollResponses = (req, res) => {
-  console.log('req', req);
-  console.log('res', res);
-
   res.status(200)
 }
 
 exports.createPoll = function (req, res, next) {
   // Get Creators UserId
 
-  // let uuid = helpers.createUUID()
+  let uuid = helpers.createUUID()
   let body = req.body
-  // body.uuid = uuid
+
+  body.user_id = uuid
+  body.poll_id = uuid
   body.createdDate = new Date()
 
   const { title, options } = req.body
@@ -73,20 +73,27 @@ exports.createPoll = function (req, res, next) {
 
   // // Writing to 2 tables at once
 
-  // db.none('insert into poll(poll_id,question,date,user_id)' +
-  //   'values(${poll_id},${question},${createdDate},${user_id})',
-  //   body)
-  //   .then(function (data) {
-  //     body.password = null
-  //     res.status(200)
-  //       .json({
-  //         body
-  //       })
-  //     return res.json(data)
-  //   })
-  //   .catch(function (err) {
-  //     return next(err)
-  //   })
+  db.none('insert into poll(poll_id,question,created_date,user_id_created)' +
+    'values(${poll_id},${question},${createdDate},${user_id})',
+    body)
+    .then(function (data) {
+      db.each('insert into poll_options(poll_id, option, option_id)' +
+        'values(${poll_id},${option},${createdDate},${user_id})',
+        body.options)
+        .then(function (data) {
+          console.log('res', res);
+          body.password = null
+          res.status(200)
+            .json({
+              body
+            })
+          return res.json(data)
+
+        })
+    })
+    .catch(function (err) {
+      return next(err)
+    })
 }
 
 exports.editPoll = (req, res) => {

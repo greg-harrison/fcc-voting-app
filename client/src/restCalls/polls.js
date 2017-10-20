@@ -14,7 +14,6 @@ export default {
     axios.get(
       POLL_URL + '/' + credentials.poll_id)
       .then(function (res) {
-        console.log('res', res);
         _this.poll = res.data
       })
       .catch(function (error) {
@@ -29,7 +28,6 @@ export default {
       USER_CREATED_POLL_LIST_URL + '/' + credentials.user_id)
 
       .then(function (res) {
-        console.log('res', res);
         _this.user.polls = res.data.data
       })
       .catch(function (error) {
