@@ -5,6 +5,7 @@ const cors = require('cors')
 const middleware = require('./middleware')
 
 const passport = require('passport')
+const passportInstance = require('./auth/passport')
 const bodyParser = require('body-parser')
 const cookieParser = require('cookie-parser')
 const session = require('express-session')
@@ -24,23 +25,23 @@ let corsOptions = {
 
 app.use(cors(corsOptions));
 app.use(logger('dev'))
+app.use(cookieParser())
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json('*/*'));
-app.use(cookieParser())
+app.use(middleware.malformedUrl)
+app.use(middleware.verifyUserAuth)
 
 // passport set-up
-console.log('process.env.VOTE_PASSPORT_SECRET', process.env.VOTE_PASSPORT_SECRET);
 app.use(session({
   secret: process.env.VOTE_PASSPORT_SECRET,
   resave: false,
   saveUninitialized: true
 }))
 
+passportInstance(passport)
 app.use(passport.initialize())
 app.use(passport.session())
 
-app.use(middleware.malformedUrl)
-app.use(middleware.verifyUserAuth)
 app.use('/', routes)
 
 app.listen(port, () => {
