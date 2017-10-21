@@ -1,4 +1,5 @@
 const db = require('../db')
+const passport = require('passport')
 const pgp = db.$config.pgp;
 const helpers = require('./helpers')
 
@@ -62,6 +63,7 @@ exports.createPoll = function (req, res, next) {
   let uuid = helpers.createUUID()
   let body = req.body
 
+  // USER ID NOT A RANDOM UUID ID!
   body.user_id = uuid
   body.poll_id = uuid
   body.createdDate = new Date()
