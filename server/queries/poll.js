@@ -1,5 +1,4 @@
 const db = require('../db')
-const passport = require('passport')
 const pgp = db.$config.pgp;
 const helpers = require('./helpers')
 
@@ -59,6 +58,8 @@ exports.getPollResponses = (req, res) => {
 
 exports.createPoll = function (req, res, next) {
   // Get Creators UserId
+
+  console.log('req', req.session);
 
   let uuid = helpers.createUUID()
   let body = req.body
