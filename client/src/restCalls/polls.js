@@ -36,7 +36,6 @@ export default {
   },
 
   createPoll(context, credentials, redirect) {
-
     const _this = context
 
     let body = credentials
@@ -47,8 +46,6 @@ export default {
 
     axios.post(USER_CREATE_POLL_URL, body, config)
       .then(function (res) {
-        // check for success value from Backend
-        // Start using POSTMAN
         console.log('res.data.success', res.data.success);
 
         console.log('res.data', res.data);
