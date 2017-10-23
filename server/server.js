@@ -16,18 +16,18 @@ const port = process.env.VOTE_BE_PORT || 8081
 const app = express()
 
 let corsOptions = {
-  "origin": true,
+  "origin": 'http://localhost:8080',
   "methods": "GET,HEAD,PUT,PATCH,POST,DELETE",
   "preflightContinue": false,
   "optionsSuccessStatus": 204,
-  "maxAge": 3600
+  "cookie": { secure: false, maxAge: (4 * 60 * 60 * 1000) }, // 4 hours
 }
 
 app.use(cors(corsOptions));
 app.use(logger('dev'))
-app.use(cookieParser())
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json('*/*'));
+app.use(cookieParser())
 app.use(middleware.malformedUrl)
 app.use(middleware.verifyUserAuth)
 

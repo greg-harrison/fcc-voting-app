@@ -59,13 +59,17 @@ exports.getPollResponses = (req, res) => {
 exports.createPoll = function (req, res, next) {
   // Get Creators UserId
 
-  console.log('req', req.session);
+  console.log('req', req);
+  console.log('req.data', req.data);
+  console.log('req.body', req.body);
 
   let uuid = helpers.createUUID()
   let body = req.body
 
-  // USER ID NOT A RANDOM UUID ID!
-  body.user_id = uuid
+  body.user_id = req.data.user_id
+
+  // Need to go back into the DB and init my Primary Keys as type UUID, poll_id, poll_option_id
+
   body.poll_id = uuid
   body.createdDate = new Date()
 

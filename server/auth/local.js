@@ -3,16 +3,13 @@ const authHelpers = require('../queries/helpers')
 
 const db = require('../db')
 
-const options = {
-  usernameField: 'email'
-}
+const options = {}
 
-module.exports = new LocalStrat(options, (username, password, done) => {
+module.exports = new LocalStrat(options, (email, password, done) => {
   //Check the DB for the user's email -- This is what we'll use in place of a username
-
-
+  console.log('email', email);
   // db.one will reject if there are more than on entry, making it perfect for this
-  db.one('select * from public.user where email = $1', username)
+  db.one('select * from public.user where email = $1', email)
     .then((user) => {
       if (!user) return done(null, false)
       if (!authHelpers.comparePass(password, user.password)) {
