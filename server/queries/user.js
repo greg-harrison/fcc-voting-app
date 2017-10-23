@@ -33,8 +33,6 @@ exports.createUser = function (req, res, next) {
 }
 
 exports.loginUser = function (req, res, next) {
-  console.log('req.user', req.user);
-  console.log('req.session', req.session);
   let body = req.body
   db.one('select * from public.user where email = $1', body.email)
     .then(function (data) {
