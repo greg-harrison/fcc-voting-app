@@ -11,11 +11,11 @@ module.exports = (passport) => {
   })
 
   passport.deserializeUser((id, done) => {
+    // Looks like this may need to be stored in a Mongo collection to maintain state, we'll need to do more research though :/
     console.log('id', id);
     db.one('select * from public.user where user_id = $1', id)
-      .then((user) => {
+      .then(function (user) {
         console.log('user', user);
-        user.hello = true
         done(null, user)
       })
       .catch((err) => { done(err, null) })
