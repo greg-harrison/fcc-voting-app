@@ -34,109 +34,100 @@
 
 <script>
 // Awesome! This type of import works for Lodash!
-import {
-  isEmpty,
-  filter,
-  pullAt,
-  omitBy,
-  pickBy,
-  some
-} from 'lodash'
+import { isEmpty, filter, pullAt, omitBy, pickBy, some } from "lodash";
 
 export default {
   data: () => ({
     poll: {
       // Change to options?
-      inputs: [
-        {
-          option: ''
-        }
-      ]
+      inputs: []
     },
     errors: {}
   }),
   methods: {
     addOption() {
-      this.poll.inputs.push({ option: '' })
+      this.poll.inputs.push({ option: "" });
     },
     removeOption(index) {
-      var array = this.poll.inputs
+      var array = this.poll.inputs;
 
       if (array.length > 1) {
-        pullAt(array, index)
+        pullAt(array, index);
 
-        this.poll = Object.assign({}, {
-          inputs: array
-        })
+        this.poll = Object.assign(
+          {},
+          {
+            inputs: array
+          }
+        );
       }
     },
     validate() {
-      let errors = {}
+      let errors = {};
 
       if (!this.poll.question) {
-        errors.questionError = 'Please Enter a Question'
+        errors.questionError = "Please Enter a Question";
       } else {
-        errors.questionError = null
+        errors.questionError = null;
       }
 
-      let emptyOption = some(this.poll.inputs, (o) => {
-        return isEmpty(o.option.toString().trim())
-      })
+      let emptyOption = some(this.poll.inputs, o => {
+        return isEmpty(o.option.toString().trim());
+      });
 
       if (emptyOption) {
-        errors.optionsError = ' cannot be empty'
+        errors.optionsError = " cannot be empty";
       } else {
-        errors.optionsError = null
+        errors.optionsError = null;
       }
 
-      errors = omitBy(errors, isEmpty)
+      errors = omitBy(errors, isEmpty);
 
-      this.errors = errors
+      this.errors = errors;
     },
     create() {
-      this.validate
+      this.validate;
 
       if (!isEmpty(this.errors)) {
-        console.log('has errors');
+        console.log("has errors");
       } else {
-        console.log('Can make the call to the backend now')
+        console.log("Can make the call to the backend now");
       }
     },
     testClick() {
-      console.log('click from parent');
+      console.log("click from parent");
     }
   },
 
   beforeCreate() {
-    console.log('beforeCreate')
+    console.log("beforeCreate");
   },
   created() {
-    console.log('created')
+    console.log("created");
   },
   beforeMount() {
-    console.log('beforeMount')
+    console.log("beforeMount");
   },
   mounted() {
-    console.log('mounted')
+    console.log("mounted");
   },
   beforeUpdate() {
-    console.log('beforeUpdate')
+    console.log("beforeUpdate");
   },
   updated() {
-    console.log('updated')
+    console.log("updated");
   },
   beforeDestroy() {
-    console.log('beforeDestroy')
+    console.log("beforeDestroy");
   },
   destroyed() {
-    console.log('destroyed')
+    console.log("destroyed");
   }
-
-}
+};
 </script>
 
 <style lang="scss" scoped>
-@import '../../style/_variables.scss';
+@import "../../style/_variables.scss";
 
 .poll {
   &.create {

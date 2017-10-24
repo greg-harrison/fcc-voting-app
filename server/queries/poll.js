@@ -1,6 +1,7 @@
 const db = require('../db')
 const pgp = db.$config.pgp;
 const helpers = require('./helpers')
+const _ = require('lodash')
 
 exports.getPoll = (req, res, next) => {
   let pollId = req.params.poll_id;
@@ -59,10 +60,6 @@ exports.getPollResponses = (req, res) => {
 exports.createPoll = function (req, res, next) {
   // Get Creators UserId
 
-  console.log('req', req);
-  console.log('req.data', req.data);
-  console.log('req.body', req.body);
-
   let uuid = helpers.createUUID()
   let body = req.body
 
@@ -73,34 +70,50 @@ exports.createPoll = function (req, res, next) {
   body.poll_id = uuid
   body.createdDate = new Date()
 
+  _.map(body.options, (x, i) => {
+    let new_id = helpers.createUUID()
+    x.poll_id = body.poll_id
+    x.option_id = new_id
+    console.log('x', x);
+  })
+
+
   const { title, options } = req.body
   // From Form
 
   res.send(req.body)
 
-  // // Writing to 2 tables at once
+  //   Multi-Table Update
 
-  db.none('insert into poll(poll_id,question,created_date,user_id_created)' +
-    'values(${poll_id},${question},${createdDate},${user_id})',
-    body)
-    .then(function (data) {
-      db.each('insert into poll_options(poll_id, option, option_id)' +
-        'values(${poll_id},${option},${createdDate},${user_id})',
-        body.options)
-        .then(function (data) {
-          console.log('res', res);
-          body.password = null
-          res.status(200)
-            .json({
-              body
-            })
-          return res.json(data)
+  //   -- We'll do something akin to this
+  //   UPDATE Table_One a INNER JOIN Table_Two b ON (a.userid = b.userid)
+  // SET
+  //   a.win = a.win+1, a.streak = a.streak+1, a.score = a.score+200,
+  //   b.win = b.win+1, b.streak = b.streak+1, b.score = b.score+200
+  // WHERE a.userid = 1 AND a.lid = 1 AND b.userid = 1
 
-        })
-    })
-    .catch(function (err) {
-      return next(err)
-    })
+  // OLD _ THIS DOESN'T WORK
+  // db.none('insert into poll(poll_id,question,created_date,user_id_created)' +
+  //   'values(${poll_id},${question},${createdDate},${user_id})',
+  //   body)
+  //   .then(function (data) {
+  //     db.each('insert into poll_options(poll_id, option, option_id)' +
+  //       'values(${poll_id},${option},${option_id})',
+  //       body.options)
+  //       .then(function (data) {
+  //         console.log('res', res);
+  //         body.password = null
+  //         res.status(200)
+  //           .json({
+  //             body
+  //           })
+  //         return res.json(data)
+
+  //       })
+  //   })
+  //   .catch(function (err) {
+  //     return next(err)
+  //   })
 }
 
 exports.editPoll = (req, res) => {
