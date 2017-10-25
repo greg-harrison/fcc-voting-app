@@ -77,12 +77,6 @@ exports.createPoll = function (req, res, next) {
     console.log('x', x);
   })
 
-
-  const { title, options } = req.body
-  // From Form
-
-  res.send(req.body)
-
   db.tx(t => {
     const pollUpdate = db.none('insert into poll(poll_id,question,created_date,user_id_created)' +
       'values(${poll_id},${question},${createdDate},${user_id})',
@@ -97,13 +91,10 @@ exports.createPoll = function (req, res, next) {
       console.log('option', option);
       queries.push(
         db.any('insert into poll_option(poll_id,poll_option_id,option_value)' +
-          'values((select poll_id from poll where poll_id = ${poll_id}) \
-            ,${poll_option_id},${option})',
+          'values((select poll_id from poll where poll_id = ${poll_id}),${poll_option_id},${option})',
           option)
       )
     }
-
-    console.log('queries', queries);
 
     return t.batch(queries)
   })
