@@ -73,7 +73,7 @@ exports.createPoll = function (req, res, next) {
   _.map(body.options, (x, i) => {
     let new_id = helpers.createUUID()
     x.poll_id = body.poll_id
-    x.option_id = new_id
+    x.poll_option_id = new_id
     console.log('x', x);
   })
 
@@ -83,37 +83,42 @@ exports.createPoll = function (req, res, next) {
 
   res.send(req.body)
 
-  //   Multi-Table Update
+  db.tx(t => {
+    const pollUpdate = db.none('insert into poll(poll_id,question,created_date,user_id_created)' +
+      'values(${poll_id},${question},${createdDate},${user_id})',
+      body)
 
-  //   -- We'll do something akin to this
-  //   UPDATE Table_One a INNER JOIN Table_Two b ON (a.userid = b.userid)
-  // SET
-  //   a.win = a.win+1, a.streak = a.streak+1, a.score = a.score+200,
-  //   b.win = b.win+1, b.streak = b.streak+1, b.score = b.score+200
-  // WHERE a.userid = 1 AND a.lid = 1 AND b.userid = 1
+    const queries = [
+      pollUpdate
+    ]
 
-  // OLD _ THIS DOESN'T WORK
-  // db.none('insert into poll(poll_id,question,created_date,user_id_created)' +
-  //   'values(${poll_id},${question},${createdDate},${user_id})',
-  //   body)
-  //   .then(function (data) {
-  //     db.each('insert into poll_options(poll_id, option, option_id)' +
-  //       'values(${poll_id},${option},${option_id})',
-  //       body.options)
-  //       .then(function (data) {
-  //         console.log('res', res);
-  //         body.password = null
-  //         res.status(200)
-  //           .json({
-  //             body
-  //           })
-  //         return res.json(data)
+    for (let i = 0; i <= body.options.length; i++) {
+      let option = body.options[i]
+      console.log('option', option);
+      queries.push(
+        db.any('insert into poll_option(poll_id,poll_option_id,option_value)' +
+          'values((select poll_id from poll where poll_id = ${poll_id}) \
+            ,${poll_option_id},${option})',
+          option)
+      )
+    }
 
-  //       })
-  //   })
-  //   .catch(function (err) {
-  //     return next(err)
-  //   })
+    console.log('queries', queries);
+
+    return t.batch(queries)
+  })
+    .then(function (data) {
+      console.log('res', res);
+      body.password = null
+      res.status(200)
+        .json({
+          body
+        })
+      return res.json(data)
+    })
+    .catch(function (err) {
+      return next(err)
+    })
 }
 
 exports.editPoll = (req, res) => {
