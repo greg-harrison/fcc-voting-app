@@ -7,18 +7,22 @@
       <div class="card-body">
         <ul class="poll-list list-group m-0">
           <li class="list-group-item" v-bind:key="index" v-for="(poll, index) in user.polls">
+            <div class="col-10 p-0">
             <p class="clearfix w-100 m-0">
               <strong>
               {{ poll.question }}
               </strong>
             </p>
             <p class="m-0">Created: {{moment(poll.created_date).format('MM/DD/YYYY')}}</p>
+            </div>
+            <div class="col-2 p-0 text-right">
             <router-link
               :to="{
                 path: `/poll/create/`+poll.poll_id,
               }">
-            Trying {{poll.poll_id}}
+              Edit Poll
             </router-link>
+            </div>
           </li>
         </ul>
         <p v-if="error" class="error">
@@ -65,7 +69,6 @@ export default {
     console.log("created");
   },
   beforeMount() {
-    console.log("beforeMount");
     this.getUser();
     this.getPolls();
   },
