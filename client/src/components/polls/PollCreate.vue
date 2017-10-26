@@ -2,7 +2,7 @@
   <div class="poll create container p-0">
     <div class="card">
       <div class="card-header">
-        Create
+        {{compActionType}}
       </div>
       <div class="card-body">
         <form>
@@ -17,7 +17,7 @@
             </span>
             <div v-for="(option, index) in poll.options" :key="index">
               <label class="d-block">
-                <input v-model="option.option" placeholder="option value">
+                <input v-model="option.option_value" placeholder="option value">
                 <strong v-if="index >= 1" @click.prevent="removeOption(index)">X</strong>
               </label>
             </div>
@@ -26,7 +26,7 @@
         </form>
       </div>
       <div class="card-footer">
-        <button class="btn btn-main" @click.prevent="create()" type="submit">Create</button>
+        <button class="btn btn-main" @click.prevent="create()" type="submit">{{compActionType}}</button>
       </div>
     </div>
   </div>
@@ -39,13 +39,26 @@ import polls from "../../restCalls/polls";
 
 export default {
   data: () => ({
+    compActionType: "Create",
     poll: {
-      // Change to options?
       options: []
     },
     errors: {}
   }),
+  props: ["poll_id"],
+  created() {
+    if (this.$route.params.poll_id) {
+      this.fetchData();
+    }
+  },
+  watch: {
+    $route: "fetchData"
+  },
   methods: {
+    fetchData() {
+      polls.getPoll(this, this.$route.params);
+      this.compActionType = "Edit";
+    },
     addOption() {
       this.poll.options.push({ option: "" });
     },
@@ -90,23 +103,13 @@ export default {
       this.validate;
 
       if (!isEmpty(this.errors)) {
-        console.log("has errors");
       } else {
-        console.log("this.poll", this.poll);
         polls.createPoll(this, this.poll, "/");
-        console.log("Can make the call to the backend now");
       }
     },
     testClick() {
       console.log("click from parent");
     }
-  },
-
-  beforeCreate() {
-    console.log("beforeCreate");
-  },
-  created() {
-    console.log("created");
   },
   beforeMount() {
     console.log("beforeMount");

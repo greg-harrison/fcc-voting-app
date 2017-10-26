@@ -3,6 +3,13 @@ const pgp = db.$config.pgp;
 const helpers = require('./helpers')
 const _ = require('lodash')
 
+function customSort(a, b) {
+  a = new Date(a.created_date).getDate()
+  b = new Date(b.created_date).getDate()
+
+  return a > b ? -1 : a < b ? 1 : 0;
+}
+
 exports.getPoll = (req, res, next) => {
   let pollId = req.params.poll_id;
   db.any(
@@ -16,7 +23,7 @@ exports.getPoll = (req, res, next) => {
       public.poll_option.option_value
     FROM
   	  public.poll
-    INNER JOIN public.poll_option ON public.poll.poll_id = public.poll_option.poll_id
+    LEFT OUTER JOIN public.poll_option ON public.poll.poll_id = public.poll_option.poll_id
     WHERE public.poll.poll_id = $1`,
     pollId)
     .then(function (data) {
@@ -41,6 +48,8 @@ exports.getUserCreatedPolls = (req, res, next) => {
     userId
   )
     .then(function (data) {
+      data = data.sort(customSort)
+      console.log('data.sort(customSort)', data.sort(customSort));
       res.status(200)
         .json({
           status: 'success',
@@ -74,7 +83,6 @@ exports.createPoll = function (req, res, next) {
     let new_id = helpers.createUUID()
     x.poll_id = body.poll_id
     x.poll_option_id = new_id
-    console.log('x', x);
   })
 
   db.tx(t => {
@@ -86,12 +94,11 @@ exports.createPoll = function (req, res, next) {
       pollUpdate
     ]
 
-    for (let i = 0; i <= body.options.length; i++) {
+    for (let i = 0; i <= body.options.length - 1; i++) {
       let option = body.options[i]
-      console.log('option', option);
       queries.push(
         db.any('insert into poll_option(poll_id,poll_option_id,option_value)' +
-          'values((select poll_id from poll where poll_id = ${poll_id}),${poll_option_id},${option})',
+          'values((select poll_id from poll where poll_id = ${poll_id}),${poll_option_id},${option_value})',
           option)
       )
     }
@@ -99,7 +106,6 @@ exports.createPoll = function (req, res, next) {
     return t.batch(queries)
   })
     .then(function (data) {
-      console.log('res', res);
       body.password = null
       res.status(200)
         .json({

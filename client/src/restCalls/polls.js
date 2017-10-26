@@ -1,5 +1,6 @@
 import axios from 'axios'
 import auth from '../auth/'
+import router from '../router'
 
 const API_URL = process.env.VOTE_API_URL
 const POLL_URL = API_URL + '/poll'
@@ -14,7 +15,8 @@ export default {
     axios.get(
       POLL_URL + '/' + credentials.poll_id)
       .then(function (res) {
-        _this.poll = res.data
+        _this.poll.question = res.data.data[0].question
+        _this.poll.options = res.data.data
       })
       .catch(function (error) {
         _this.error = error.response.data.message
@@ -46,9 +48,7 @@ export default {
 
     axios.post(USER_CREATE_POLL_URL, body, config)
       .then(function (res) {
-        console.log('res.data.success', res.data.success);
-
-        console.log('res.data', res.data);
+        router.push(redirect)
       })
       .catch(function (error) {
         _this.error = error.response.data.message
