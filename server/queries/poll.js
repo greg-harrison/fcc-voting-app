@@ -99,7 +99,6 @@ exports.createPoll = function (req, res, next) {
     return t.batch(queries)
   })
     .then(function (data) {
-      console.log('res', res);
       body.password = null
       res.status(200)
         .json({

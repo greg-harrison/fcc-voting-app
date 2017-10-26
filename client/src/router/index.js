@@ -40,8 +40,9 @@ const router = new Router({
       },
       meta: { requiresAuth: true }
     },
+    // Poll Create uses Optional Param to swap between Edit and Create modes
     {
-      path: '/poll/create',
+      path: '/poll/create/:poll_id?',
       components: {
         header: Header,
         default: PollCreate

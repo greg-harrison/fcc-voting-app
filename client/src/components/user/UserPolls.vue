@@ -5,9 +5,20 @@
         {{ user.details.name }}'s Polls
       </div>
       <div class="card-body">
-        <ul class="poll-list">
-          <li v-bind:key="index" v-for="(poll, index) in user.polls">
-            <span>{{ poll.question }}</span>
+        <ul class="poll-list list-group m-0">
+          <li class="list-group-item" v-bind:key="index" v-for="(poll, index) in user.polls">
+            <p class="clearfix w-100 m-0">
+              <strong>
+              {{ poll.question }}
+              </strong>
+            </p>
+            <p class="m-0">Created: {{moment(poll.created_date).format('MM/DD/YYYY')}}</p>
+            <router-link
+              :to="{
+                path: `/poll/create/`+poll.poll_id,
+              }">
+            Trying {{poll.poll_id}}
+            </router-link>
           </li>
         </ul>
         <p v-if="error" class="error">
@@ -19,67 +30,61 @@
 </template>
 
 <script>
-import poll from '../../restCalls/polls'
-import auth from '../../auth'
+import poll from "../../restCalls/polls";
+import auth from "../../auth";
+import moment from "moment";
 
 export default {
   data: () => ({
+    moment: moment,
     user: {
       details: {},
       polls: []
-    }
+    },
+    error: ""
   }),
   methods: {
     getUser() {
-      this.user.details = auth.user.user_detail
+      this.user.details = auth.user.user_detail;
     },
     getPolls() {
-      console.log('this.user', this.user);
-
-      console.log('auth', auth);
-
-
       if (auth.user.user_detail.user_id) {
         let credentials = {
           user_id: auth.user.user_detail.user_id
-        }
+        };
 
-        poll.getUserPolls(this, credentials)
-
+        poll.getUserPolls(this, credentials);
       }
-
     }
   },
 
   beforeCreate() {
-    console.log('beforeCreate')
+    console.log("beforeCreate");
   },
   created() {
-    console.log('created')
+    console.log("created");
   },
   beforeMount() {
-    console.log('beforeMount')
-    this.getUser()
-
-    this.getPolls()
+    console.log("beforeMount");
+    this.getUser();
+    this.getPolls();
   },
   mounted() {
-    console.log('mounted')
+    console.log("mounted");
   },
   beforeUpdate() {
-    console.log('beforeUpdate')
+    console.log("beforeUpdate");
   },
   updated() {
-    console.log('updated')
+    console.log("updated");
   },
   beforeDestroy() {
-    console.log('beforeDestroy')
+    console.log("beforeDestroy");
   },
   destroyed() {
-    console.log('destroyed')
+    console.log("destroyed");
   }
-
-}
+};
 </script>
 
 <style lang="scss" scoped>

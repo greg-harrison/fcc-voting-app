@@ -40,12 +40,23 @@ import polls from "../../restCalls/polls";
 export default {
   data: () => ({
     poll: {
-      // Change to options?
       options: []
     },
     errors: {}
   }),
+  props: ["poll_id"],
+  created() {
+    if (this.$route.params.poll_id) {
+      this.fetchData();
+    }
+  },
+  watch: {
+    $route: "fetchData"
+  },
   methods: {
+    fetchData() {
+      console.log("test");
+    },
     addOption() {
       this.poll.options.push({ option: "" });
     },
@@ -90,23 +101,13 @@ export default {
       this.validate;
 
       if (!isEmpty(this.errors)) {
-        console.log("has errors");
       } else {
-        console.log("this.poll", this.poll);
         polls.createPoll(this, this.poll, "/");
-        console.log("Can make the call to the backend now");
       }
     },
     testClick() {
       console.log("click from parent");
     }
-  },
-
-  beforeCreate() {
-    console.log("beforeCreate");
-  },
-  created() {
-    console.log("created");
   },
   beforeMount() {
     console.log("beforeMount");
