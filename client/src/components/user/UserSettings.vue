@@ -1,16 +1,19 @@
 <template>
   <div class="user_settings container p-0">
-    <h1>Hello {{user.name}}</h1>
-    <p>{{user.email}}</p>
-    <router-link to="user/polls">
-      Go To My Polls
-    </router-link>
+    <div class="mb-5">
+      <h1>{{user.name | capitalize}}</h1>
+      <p>{{user.email}}</p>
+    </div>
+
+    <user-polls></user-polls>
   </div>
 </template>
 
 <script>
-import axios from 'axios'
-import auth from '../../auth/'
+import axios from "axios";
+import auth from "../../auth/";
+import UserPolls from "./UserPolls.vue";
+import { capitalize } from "../reusable_components/filters";
 
 export default {
   data: () => ({
@@ -19,38 +22,42 @@ export default {
       email: auth.user.user_detail.email
     }
   }),
-  methods: {
+  methods: {},
+  components: {
+    UserPolls
   },
-
+  filters: {
+    capitalize
+  },
   beforeCreate() {
-    console.log('beforeCreate')
+    console.log("beforeCreate");
   },
   created() {
-    console.log('created')
+    console.log("created");
   },
   beforeMount() {
-    console.log('beforeMount')
+    console.log("beforeMount");
   },
   mounted() {
-    console.log('mounted')
+    console.log("mounted");
   },
   beforeUpdate() {
-    console.log('beforeUpdate')
+    console.log("beforeUpdate");
   },
   updated() {
-    console.log('updated')
+    console.log("updated");
   },
   beforeDestroy() {
-    console.log('beforeDestroy')
+    console.log("beforeDestroy");
   },
   destroyed() {
-    console.log('destroyed')
+    console.log("destroyed");
   }
-}
+};
 </script>
 
 <style scoped lang="scss">
-@import '../../style/_variables.scss';
+@import "../../style/_variables.scss";
 .user_settings {
   margin-top: 3rem;
   text-align: center;

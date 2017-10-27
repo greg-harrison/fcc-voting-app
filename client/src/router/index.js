@@ -57,15 +57,6 @@ const router = new Router({
         default: UserSettings
       },
       meta: { requiresAuth: true }
-    },
-    {
-      //user/:userId
-      path: '/user/polls',
-      components: {
-        header: Header,
-        default: UserPolls
-      },
-      meta: { requiresAuth: true }
     }
   ]
 })

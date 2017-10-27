@@ -12,7 +12,7 @@
       <ul class="navbar-nav mr-auto">
         <li class="nav-item">
           <router-link to="/user" exact tag="a" class="nav-link">
-            {{ user.name || 'User' }}
+            {{ user.name || 'User' | capitalize}}
           </router-link>
         </li>
       </ul>
@@ -33,32 +33,36 @@
 </template>
 
 <script>
-import auth from '../../auth/'
+import auth from "../../auth/";
+import { capitalize } from "../reusable_components/filters";
 
 export default {
-  name: 'header',
+  name: "header",
   data() {
     return {
       currentRoute: this.$route.fullPath,
       user: {
         name: auth.user.user_detail.name,
         isLoggedIn: auth.user.authenticated
-      },
-    }
+      }
+    };
   },
   methods: {
     logout: function() {
-      auth.logout('/')
+      auth.logout("/");
     }
+  },
+  filters: {
+    capitalize
   },
   mounted() {
     // Check user status
   }
-}
+};
 </script>
 
 <style scoped lang="scss">
-@import '../../style/_variables.scss';
+@import "../../style/_variables.scss";
 
 .navbar {
   background-color: $blue;
@@ -70,7 +74,7 @@ export default {
     color: $cream;
   }
   .router-link-active {
-    color: $cream!important;
+    color: $cream !important;
   }
 }
 </style>
