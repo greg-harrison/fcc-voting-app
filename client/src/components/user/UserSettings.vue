@@ -1,11 +1,15 @@
 <template>
-  <div class="user_settings container p-0">
-    <div class="mb-5">
-      <h1>{{user.name | capitalize}}</h1>
-      <p>{{user.email}}</p>
+  <div class="user_settings container p-0 mx-auto">
+    <div class="mb-5 col col-sm-6 text-center">
+      <div class="user-holder">
+        <h1>{{user.name | capitalize}}</h1>
+        <p>{{user.email}}</p>
+      </div>
     </div>
 
-    <user-polls></user-polls>
+    <div class="col col-sm-6">
+      <user-polls></user-polls>
+    </div>
   </div>
 </template>
 
@@ -61,5 +65,17 @@ export default {
 .user_settings {
   margin-top: 3rem;
   text-align: center;
+
+  @media screen and (min-width: 577px) {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .user-holder {
+    @media screen and (min-width: 577px) {
+      position: fixed;
+      margin: 0 auto;
+      margin-left: 10%;
+    }
+  }
 }
 </style>

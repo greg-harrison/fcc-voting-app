@@ -1,9 +1,6 @@
 <template>
   <div class="user display-polls container p-0">
     <div class="card">
-      <div class="card-header">
-        {{ user.details.name | capitalize }}'s Polls
-      </div>
       <div class="card-body">
         <ul class="poll-list list-group m-0">
           <li class="list-group-item text-left" v-bind:key="index" v-for="(poll, index) in user.polls">
