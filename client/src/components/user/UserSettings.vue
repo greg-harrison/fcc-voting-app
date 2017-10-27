@@ -3,6 +3,7 @@
     <div class="mb-5 col col-sm-6 text-center">
       <div class="user-holder">
         <h1>{{user.name | capitalize}}</h1>
+        <img class="user-avatar" src="http://via.placeholder.com/150x150" alt="user_avatar">
         <p>{{user.email}}</p>
       </div>
     </div>
@@ -71,6 +72,11 @@ export default {
     flex-wrap: wrap;
   }
   .user-holder {
+    .user-avatar {
+      border-radius: 100%;
+      border: 1px solid $navy;
+      margin-bottom: 0.5rem;
+    }
     @media screen and (min-width: 577px) {
       position: fixed;
       margin: 0 auto;
