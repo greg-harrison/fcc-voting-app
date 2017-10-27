@@ -4,13 +4,16 @@
       <div class="card-header">
         {{compActionType}}
       </div>
-      <div class="card-body">
-        <form>
-          <label class="d-block">
-            <p v-if="!!errors.questionError" class="error">{{errors.questionError}}</p>
+      <div class="card-body p-5 ">
+        <form class="container">
+          <label class="col text-left question">
+            <p class="m-0" v-bind:class="{ error: !!errors.questionError}">
+              Question
+              <span v-if="!!errors.questionError" class="error">{{errors.questionError}}</span>
+            </p>
             <input v-model="poll.question" placeholder="question">
           </label>
-          <div>
+          <div class="col text-left mt-3 options">
             <span v-bind:class="{ error: !!errors.optionsError}">
               Options
               <span v-if="!!errors.optionsError" class="error">{{errors.optionsError}}</span>
@@ -21,12 +24,12 @@
                 <strong v-if="index >= 1" @click.prevent="removeOption(index)">X</strong>
               </label>
             </div>
-            <button @click.prevent="addOption()">Add Option</button>
+            <button class="btn btn-main add-btn" @click.prevent="addOption()">Add Option</button>
           </div>
         </form>
       </div>
       <div class="card-footer">
-        <button class="btn btn-main" @click.prevent="create()" type="submit">{{compActionType}}</button>
+        <button class="btn btn-main close-btn" @click.prevent="create()" type="submit">{{compActionType}}</button>
       </div>
     </div>
   </div>
@@ -41,7 +44,11 @@ export default {
   data: () => ({
     compActionType: "Create",
     poll: {
-      options: []
+      options: [
+        {
+          option: ""
+        }
+      ]
     },
     errors: {}
   }),
@@ -110,24 +117,6 @@ export default {
     testClick() {
       console.log("click from parent");
     }
-  },
-  beforeMount() {
-    console.log("beforeMount");
-  },
-  mounted() {
-    console.log("mounted");
-  },
-  beforeUpdate() {
-    console.log("beforeUpdate");
-  },
-  updated() {
-    console.log("updated");
-  },
-  beforeDestroy() {
-    console.log("beforeDestroy");
-  },
-  destroyed() {
-    console.log("destroyed");
   }
 };
 </script>
@@ -141,6 +130,42 @@ export default {
       color: $orange;
       padding: 0;
       margin: 0;
+    }
+    .add-btn {
+      background-color: $green;
+      color: $white;
+      &:hover,
+      &:active,
+      &:focus {
+        background-color: darken($green, 5%);
+        color: darken($white, 5%);
+      }
+    }
+    .close-btn {
+      background-color: $blue;
+      color: $white;
+      &:hover,
+      &:active,
+      &:focus {
+        background-color: darken($blue, 5%);
+        color: darken($white, 5%);
+      }
+    }
+    .question,
+    .options {
+      input {
+        border: 1px solid $grey;
+        border-radius: 4px;
+        padding: 4px 5px;
+
+        outline: none;
+
+        &:hover,
+        &:active,
+        &:focus {
+          border-color: $blue;
+        }
+      }
     }
   }
 }

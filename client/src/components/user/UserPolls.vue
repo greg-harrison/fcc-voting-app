@@ -1,12 +1,9 @@
 <template>
   <div class="user display-polls container p-0">
     <div class="card">
-      <div class="card-header">
-        {{ user.details.name }}'s Polls
-      </div>
       <div class="card-body">
         <ul class="poll-list list-group m-0">
-          <li class="list-group-item" v-bind:key="index" v-for="(poll, index) in user.polls">
+          <li class="list-group-item text-left" v-bind:key="index" v-for="(poll, index) in user.polls">
             <div class="col-10 p-0">
             <p class="clearfix w-100 m-0">
               <strong>
@@ -37,6 +34,7 @@
 import poll from "../../restCalls/polls";
 import auth from "../../auth";
 import moment from "moment";
+import { capitalize } from "../reusable_components/filters";
 
 export default {
   data: () => ({
@@ -61,7 +59,9 @@ export default {
       }
     }
   },
-
+  filters: {
+    capitalize
+  },
   beforeCreate() {
     console.log("beforeCreate");
   },
