@@ -5,20 +5,19 @@
         <ul class="poll-list list-group m-0">
           <li class="list-group-item text-left" v-bind:key="index" v-for="(poll, index) in user.polls">
             <div class="col-10 p-0">
-            <p class="clearfix w-100 m-0">
-              <strong>
-              {{ poll.question }}
-              </strong>
-            </p>
-            <p class="m-0">Created: {{moment(poll.created_date).format('MM/DD/YYYY')}}</p>
+              <p class="clearfix w-100 m-0">
+                <strong>
+                  {{ poll.question }}
+                </strong>
+              </p>
+              <p class="m-0">Created: {{moment(poll.created_date).format('MM/DD/YYYY')}}</p>
             </div>
             <div class="col-2 p-0 text-right">
-            <router-link
-              :to="{
-                path: `/poll/create/`+poll.poll_id,
-              }">
-              Edit Poll
-            </router-link>
+              <router-link :to="{
+                      path: `/poll/create/`+poll.poll_id,
+                    }">
+                Edit Poll
+              </router-link>
             </div>
           </li>
         </ul>
@@ -40,8 +39,7 @@ export default {
   data: () => ({
     moment: moment,
     user: {
-      details: {},
-      polls: []
+      details: {}
     },
     error: ""
   }),
@@ -49,15 +47,6 @@ export default {
     getUser() {
       this.user.details = auth.user.user_detail;
     },
-    getPolls() {
-      if (auth.user.user_detail.user_id) {
-        let credentials = {
-          user_id: auth.user.user_detail.user_id
-        };
-
-        poll.getUserPolls(this, credentials);
-      }
-    }
   },
   filters: {
     capitalize
