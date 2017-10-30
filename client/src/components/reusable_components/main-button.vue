@@ -1,5 +1,5 @@
 <template>
-  <button v-bind:class="'btn '+ 'va-c-'+ textColor +' va-bg-'+ btnColor" @click="onClick">
+  <button v-bind:class="'btn '+ 'va-c-'+ textColor +' va-bg-'+ btnColor" @click.prevent="onClick">
     {{btnText}}
   </button>
 </template>
@@ -9,21 +9,23 @@ export default {
   props: {
     btnText: String,
     btnColor: String,
-    textColor: String,
+    textColor: {
+      type: String,
+      default() {
+        return "white";
+      }
+    },
     onClick: {
       type: Function,
       required: false
     }
-  },
-  data: () => ({
-    textColor: 'white'
-  })
-}
+  }
+};
 </script>
 
 <style lang="scss" scoped>
-@import '../../style/_variables.scss';
-@import '../../style/_global.scss';
+@import "../../style/_variables.scss";
+@import "../../style/_global.scss";
 
 .btn {
   cursor: pointer;

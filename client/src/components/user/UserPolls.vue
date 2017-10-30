@@ -1,6 +1,6 @@
 <template>
-  <div v-bind:class="user.polls>0 ? 'col col-sm-6' : 'hidden'">
-    <div class="user display-polls container p-0">
+  <div class="col col-sm-6">
+    <div v-bind:hidden="user.pollLength<1" class="user display-polls container p-0">
       <div class="card">
         <div class="card-body">
           <ul class="poll-list list-group m-0">
@@ -26,6 +26,16 @@
         </div>
       </div>
     </div>
+    <div v-bind:hidden="user.pollLength>0" class="user display-polls container p-0">
+      <div class="card">
+        <div class="card-body p-3">
+          You have created no polls.
+          <router-link to="/poll/create">
+            Click here to get started.
+          </router-link>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -39,7 +49,9 @@ export default {
   data: () => ({
     moment: moment,
     user: {
-      details: {}
+      details: {},
+      polls: [],
+      pollLength: 0
     },
     error: ""
   }),
@@ -47,6 +59,10 @@ export default {
     getUser() {
       this.user.details = auth.user.user_detail;
     },
+    getPolls() {
+      this.user.polls = poll.getUserPolls(this, auth.user.user_detail);
+      this.user.pollLength = this.user.polls.length || 0;
+    }
   },
   filters: {
     capitalize
