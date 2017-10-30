@@ -61,7 +61,9 @@ export default {
     },
     getPolls() {
       this.user.polls = poll.getUserPolls(this, auth.user.user_detail);
-      this.user.pollLength = this.user.polls.length || 0;
+    },
+    checkPollLength() {
+      this.user.pollLength = this.user.polls.length;
     }
   },
   filters: {
@@ -84,6 +86,7 @@ export default {
     console.log("beforeUpdate");
   },
   updated() {
+    this.checkPollLength();
     console.log("updated");
   },
   beforeDestroy() {

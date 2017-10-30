@@ -47,7 +47,7 @@ export default {
     poll: {
       options: [
         {
-          option: ""
+          option_value: ""
         }
       ]
     },
@@ -68,7 +68,7 @@ export default {
       this.compActionType = "Edit";
     },
     addOption() {
-      this.poll.options.push({ option: "" });
+      this.poll.options.push({ option_value: "" });
     },
     removeOption(index) {
       var array = this.poll.options;
@@ -94,7 +94,7 @@ export default {
       }
 
       let emptyOption = some(this.poll.options, o => {
-        return isEmpty(o.option.toString().trim());
+        return isEmpty(o.option_value.toString().trim());
       });
 
       if (emptyOption) {
@@ -111,21 +111,17 @@ export default {
         errors.formError = null;
       }
 
-      console.log("errors", errors);
+      errors = omitBy(errors, isEmpty);
+
       this.errors = errors;
     },
     create() {
       this.validate();
 
-      console.log("errors", this.errors);
-
       if (!isEmpty(this.errors)) {
       } else {
         polls.createPoll(this, this.poll, "/");
       }
-    },
-    testClick() {
-      console.log("click from parent");
     }
   }
 };
