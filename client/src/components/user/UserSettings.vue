@@ -8,11 +8,9 @@
       </div>
     </div>
 
-    <div class="col col-sm-6">
-      <!-- Need to look into the bug where it renders even when there's nothing.
-            Want the other part to be full width in that case -->
-      <user-polls></user-polls>
-    </div>
+    <!-- Need to look into the bug where it renders even when there's nothing.
+              Want the other part to be full width in that case -->
+    <user-polls></user-polls>
   </div>
 </template>
 

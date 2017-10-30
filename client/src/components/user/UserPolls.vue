@@ -1,29 +1,29 @@
 <template>
-  <div class="user display-polls container p-0">
-    <div class="card">
-      <div class="card-body">
-        <ul class="poll-list list-group m-0">
-          <li class="list-group-item text-left" v-bind:key="index" v-for="(poll, index) in user.polls">
-            <div class="col-10 p-0">
-              <p class="clearfix w-100 m-0">
-                <strong>
-                  {{ poll.question }}
-                </strong>
-              </p>
-              <p class="m-0">Created: {{moment(poll.created_date).format('MM/DD/YYYY')}}</p>
-            </div>
-            <div class="col-2 p-0 text-right">
-              <router-link :to="{
-                      path: `/poll/create/`+poll.poll_id,
-                    }">
-                Edit Poll
-              </router-link>
-            </div>
-          </li>
-        </ul>
-        <p v-if="error" class="error">
-          {{ error }}, please try again
-        </p>
+  <div v-bind:class="user.polls>0 ? 'col col-sm-6' : 'hidden'">
+    <div class="user display-polls container p-0">
+      <div class="card">
+        <div class="card-body">
+          <ul class="poll-list list-group m-0">
+            <li class="list-group-item text-left" v-bind:key="index" v-for="(poll, index) in user.polls">
+              <div class="col-10 p-0">
+                <p class="clearfix w-100 m-0">
+                  <strong>
+                    {{ poll.question }}
+                  </strong>
+                </p>
+                <p class="m-0">Created: {{moment(poll.created_date).format('MM/DD/YYYY')}}</p>
+              </div>
+              <div class="col-2 p-0 text-right">
+                <router-link :to="{path: `/poll/create/`+poll.poll_id}">
+                  Edit Poll
+                </router-link>
+              </div>
+            </li>
+          </ul>
+          <p v-if="error" class="error">
+            {{ error }}, please try again
+          </p>
+        </div>
       </div>
     </div>
   </div>
