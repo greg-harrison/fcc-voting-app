@@ -10,48 +10,33 @@
 </template>
 
 <script>
-import axios from 'axios'
-import router from '../../router'
-import MainButton from '../reusable_components/main-button.vue'
+import axios from "axios";
+import router from "../../router";
+import MainButton from "../reusable_components/main-button.vue";
 
 export default {
-  name: 'landing',
+  name: "landing",
   data: () => ({
     results: []
   }),
   methods: {
     goToPollCreate: function() {
-      // How to use this for both creating and editing.
-      // I'm thinking that we make an API call that's like "initiate Poll" which sends the poll_id on the response
-      // Once we have the poll_id, we redirect into it with that poll_id, making Editing and Creating essentially no different
-
-      // BEFORE WE DO ALL OF THAT, we'll want to add Vuex, but that's for another time :D
-
-      router.push('/poll/create')
+      router.push("/poll/create");
     },
     loadData: function() {
-      const vm = this
-      // axios.get(process.env.VOTE_API_URL).then(
-      //   response => {
-      //     vm.results = response
-      //   })
-      //   .catch((error) => {
-      //     // console.log('error', error);
-      //   })
-    },
+      const vm = this;
+    }
   },
   components: {
     MainButton
   },
-  mounted() {
-    // this.loadData()
-  }
-}
+  mounted() {}
+};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
-@import '../../style/_variables.scss';
+@import "../../style/_variables.scss";
 .landing {
   margin-top: 3rem;
   text-align: center;

@@ -30,6 +30,7 @@
       </div>
       <div class="card-footer">
         <button class="btn btn-main close-btn" @click.prevent="create()" type="submit">{{compActionType}}</button>
+        <span v-if="!!errors.formError" class="error">{{errors.formError}}</span>
       </div>
     </div>
   </div>
@@ -87,7 +88,7 @@ export default {
       let errors = {};
 
       if (!this.poll.question) {
-        errors.questionError = "Please Enter a Question";
+        errors.questionError = " cannot be empty";
       } else {
         errors.questionError = null;
       }
@@ -104,10 +105,19 @@ export default {
 
       errors = omitBy(errors, isEmpty);
 
+      if (Object.keys(errors).length > 1) {
+        errors.formError = "Form has multiple errors";
+      } else {
+        errors.formError = null;
+      }
+
+      console.log("errors", errors);
       this.errors = errors;
     },
     create() {
-      this.validate;
+      this.validate();
+
+      console.log("errors", this.errors);
 
       if (!isEmpty(this.errors)) {
       } else {
