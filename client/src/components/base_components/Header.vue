@@ -17,12 +17,12 @@
         </li>
       </ul>
       <ul class="navbar-nav">
-        <li v-if="!user.isLoggedIn" class="nav-item">
+        <li v-if="!user.isLoggedIn" class="nav-item cursor">
           <router-link to="/login" exact tag="a" class="nav-link">
             Login
           </router-link>
         </li>
-        <li v-if="user.isLoggedIn" class="nav-item">
+        <li v-if="user.isLoggedIn" class="nav-item cursor">
           <a v-on:click="logout" class="nav-link">
             Logout
           </a>

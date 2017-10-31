@@ -64,6 +64,7 @@ export default {
   },
   methods: {
     fetchData() {
+      console.log("fetching");
       polls.getPoll(this, this.$route.params);
       this.compActionType = "Edit";
     },

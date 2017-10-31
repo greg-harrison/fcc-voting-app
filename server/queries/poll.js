@@ -74,7 +74,7 @@ exports.createPoll = function (req, res, next) {
 
   body.user_id = req.data.user_id
 
-  // Need to go back into the DB and init my Primary Keys as type UUID, poll_id, poll_option_id
+  // Call is failing to send back the options on newly created polls. Issue might be in here
 
   body.poll_id = uuid
   body.createdDate = new Date()
