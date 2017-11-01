@@ -117,7 +117,7 @@ export default {
       this.errors = errors;
     },
     create() {
-      this.validate();
+      this.validate;
 
       if (!isEmpty(this.errors)) {
       } else {

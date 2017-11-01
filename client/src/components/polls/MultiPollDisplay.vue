@@ -26,9 +26,6 @@ export default {
         .catch(error => {
           console.log("error", error);
         });
-    },
-    testClick() {
-      console.log("click from parent");
     }
   },
 

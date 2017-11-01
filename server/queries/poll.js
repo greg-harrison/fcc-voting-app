@@ -3,13 +3,6 @@ const pgp = db.$config.pgp;
 const helpers = require('./helpers')
 const _ = require('lodash')
 
-function customSort(a, b) {
-  a = new Date(a.created_date).getDate()
-  b = new Date(b.created_date).getDate()
-
-  return a > b ? -1 : a < b ? 1 : 0;
-}
-
 exports.getPoll = (req, res, next) => {
   let pollId = req.params.poll_id;
   db.any(
@@ -27,6 +20,7 @@ exports.getPoll = (req, res, next) => {
     WHERE public.poll.poll_id = $1`,
     pollId)
     .then(function (data) {
+      console.log('data', data);
       res.status(200)
         .json({
           status: 'success',
@@ -43,13 +37,15 @@ exports.getUserCreatedPolls = (req, res, next) => {
   let userId = req.params.user_id;
 
   db.any(
-    `SELECT * FROM public.poll
-    WHERE public.poll.user_id_created = $1`,
+    `
+    SELECT * FROM public.poll
+    WHERE public.poll.user_id_created = $1
+    ORDER BY
+    public.poll.created_date desc
+    `,
     userId
   )
     .then(function (data) {
-      data = data.sort(customSort)
-      console.log('data.sort(customSort)', data.sort(customSort));
       res.status(200)
         .json({
           status: 'success',
@@ -102,6 +98,10 @@ exports.createPoll = function (req, res, next) {
           option)
       )
     }
+
+    console.log('queries', queries);
+
+    console.log('body.options', body.options);
 
     return t.batch(queries)
   })
