@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import poll from '../../restCalls/polls'
+import poll from "../../restCalls/polls";
 
 export default {
   data: () => ({
@@ -25,39 +25,38 @@ export default {
     getPoll() {
       let credentials = {
         poll_id: 1
-      }
+      };
 
-      poll.getPoll(this, credentials)
-    },
+      poll.getPoll(this, credentials);
+    }
   },
 
   beforeCreate() {
-    console.log('beforeCreate')
+    console.log("beforeCreate");
   },
   created() {
-    console.log('created')
+    console.log("created");
   },
   beforeMount() {
-    this.getPoll()
-    console.log('beforeMount')
+    this.getPoll();
+    console.log("beforeMount");
   },
   mounted() {
-    console.log('mounted')
+    console.log("mounted");
   },
   beforeUpdate() {
-    console.log('beforeUpdate')
+    console.log("beforeUpdate");
   },
   updated() {
-    console.log('updated')
+    console.log("updated");
   },
   beforeDestroy() {
-    console.log('beforeDestroy')
+    console.log("beforeDestroy");
   },
   destroyed() {
-    console.log('destroyed')
+    console.log("destroyed");
   }
-
-}
+};
 </script>
 
 <style lang="sass" scoped>

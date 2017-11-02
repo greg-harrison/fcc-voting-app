@@ -24,6 +24,20 @@ export default {
       });
   },
 
+  getAllPollsList(context, redirect) {
+    const _this = context
+    console.log('making check');
+
+    axios.get(USER_CREATED_POLL_LIST_URL + '/all')
+      .then(function (res) {
+        console.log('res', res);
+        _this.polls = res.data.data
+      })
+      .catch(function (error) {
+        _this.error = error.response.data.message
+      });
+  },
+
   getUserPolls(context, credentials, redirect) {
     const _this = context
 

@@ -7,10 +7,10 @@ import Landing from '@/components/landing/Landing'
 import Login from '@/components/landing/login'
 import Signup from '@/components/landing/signup'
 import UserSettings from '@/components/user/UserSettings'
-import ShowPolls from '@/components/polls/MultiPollDisplay'
 import PollView from '@/components/polls/PollDisplay'
-import PollCreate from '@/components/polls/PollCreate'
+import PollCreate from '@/components/polls/create/PollCreate'
 import UserPolls from '@/components/user/UserPolls'
+import RespondList from '@/components/polls/respond/RespondPollsList'
 
 Vue.use(Router)
 const router = new Router({
@@ -46,6 +46,14 @@ const router = new Router({
       components: {
         header: Header,
         default: PollCreate
+      },
+      meta: { requiresAuth: true }
+    },
+    {
+      path: '/poll/respond/list',
+      components: {
+        header: Header,
+        default: RespondList
       },
       meta: { requiresAuth: true }
     },
