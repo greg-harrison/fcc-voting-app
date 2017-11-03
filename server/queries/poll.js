@@ -143,8 +143,27 @@ exports.createPoll = function (req, res, next) {
 }
 
 exports.respondToPoll = (req, res) => {
-  console.log('req', req);
-  console.log('res', res);
+  let uuid = helpers.createUUID()
+  let body = req.body
 
-  res.status(200)
+  console.log('req', req.data);
+
+  body.user_id = req.data.user_id
+  body.response_id = uuid
+
+  console.log('body', body);
+
+  db.any('insert into public.poll_response(user_id,response_id,poll_id,poll_option_id)' +
+    'values(${user_id},${response_id},(select poll_id from poll where poll_id = ${poll_id}),${poll_option_id})',
+    body)
+    .then(function (data) {
+      res.status(200)
+        .json({
+          body
+        })
+      return res.json(data)
+    })
+    .catch(function (err) {
+      return next(err)
+    })
 }

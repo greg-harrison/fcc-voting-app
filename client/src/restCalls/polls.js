@@ -69,5 +69,4 @@ export default {
         _this.error = error.response.data.message
       });
   }
-
 }
