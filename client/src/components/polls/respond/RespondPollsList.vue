@@ -18,7 +18,7 @@
               <!-- Need to add Responses to UserSettings Page (basically just showing the list of polls to which the user has submitted a response) -->
               <!-- Collapsing on the User Settings -->
               <!-- Pagination/Infinite Scroll for the lists -->
-              <router-link :to="{path: `/poll/create/`+poll.poll_id}">
+              <router-link :to="{path: `/poll/respond/`+poll.poll_id}">
                 Respond
               </router-link>
             </div>

@@ -11,6 +11,7 @@ import PollView from '@/components/polls/PollDisplay'
 import PollCreate from '@/components/polls/create/PollCreate'
 import UserPolls from '@/components/user/UserPolls'
 import RespondList from '@/components/polls/respond/RespondPollsList'
+import PollCreateResponse from '@/components/polls/respond/ResponseCreate'
 
 Vue.use(Router)
 const router = new Router({
@@ -54,6 +55,14 @@ const router = new Router({
       components: {
         header: Header,
         default: RespondList
+      },
+      meta: { requiresAuth: true }
+    },
+    {
+      path: '/poll/respond/:poll_id',
+      components: {
+        header: Header,
+        default: PollCreateResponse
       },
       meta: { requiresAuth: true }
     },

@@ -12,6 +12,6 @@ router.get('/responses/:poll_id', pollQueries.getPollResponses)
 // Creation Routes
 router.post('/create', middleware.verifyUserAuth, pollQueries.createPoll)
 // router.put('/update/:poll_id', pollQueries.editPoll)
-router.put('/respond/:poll_id/:response_id/:user_id/', pollQueries.respondToPoll)
+router.post('/respond', pollQueries.respondToPoll)
 
 module.exports = router
