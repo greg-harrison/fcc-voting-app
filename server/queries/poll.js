@@ -20,7 +20,6 @@ exports.getPoll = (req, res, next) => {
     WHERE public.poll.poll_id = $1`,
     pollId)
     .then(function (data) {
-      console.log('data', data);
       res.status(200)
         .json({
           status: 'success',

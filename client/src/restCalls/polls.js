@@ -15,7 +15,6 @@ export default {
     axios.get(
       POLL_URL + '/' + credentials.poll_id)
       .then(function (res) {
-        console.log('res.data.data', res.data.data);
         _this.poll.question = res.data.data[0].question
         _this.poll.options = res.data.data
       })
@@ -26,11 +25,9 @@ export default {
 
   getAllPollsList(context, redirect) {
     const _this = context
-    console.log('making check');
 
     axios.get(USER_CREATED_POLL_LIST_URL + '/all')
       .then(function (res) {
-        console.log('res', res);
         _this.polls = res.data.data
       })
       .catch(function (error) {
