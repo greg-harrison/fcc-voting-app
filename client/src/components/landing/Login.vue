@@ -35,39 +35,38 @@
 </template>
 
 <script>
-import auth from '../../auth/'
+import auth from "../../auth/";
 
 export default {
-  name: 'login',
+  name: "login",
   data: () => ({
     credentials: {
-      email: '',
-      pass: ''
+      email: "",
+      pass: ""
     },
-    error: ''
+    error: ""
   }),
   methods: {
     login() {
       let credentials = {
         email: this.credentials.email,
         pass: this.credentials.pass
-      }
+      };
 
-      auth.login(this, credentials, '/')
+      auth.login(this, credentials, "/");
       // GO TO LANDING
-    },
+    }
   },
-  mounted() {
-  }
-}
+  mounted() {}
+};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 
 <style scoped lang="scss">
-@import '../../style/_variables.scss';
-@import '../../style/reusable-component-styles/main-button.scss';
-@import '../../style/reusable-component-styles/auth-card.scss';
+@import "../../style/_variables.scss";
+@import "../../style/reusable-component-styles/main-button.scss";
+@import "../../style/reusable-component-styles/auth-card.scss";
 
 .login {
   .error {

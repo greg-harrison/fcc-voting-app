@@ -39,7 +39,7 @@
 <script>
 // Awesome! This type of import works for Lodash!
 import { isEmpty, filter, pullAt, omitBy, pickBy, some } from "lodash";
-import polls from "../../restCalls/polls";
+import polls from "../../../restCalls/polls";
 
 export default {
   data: () => ({
@@ -129,7 +129,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "../../style/_variables.scss";
+@import "../../../style/_variables.scss";
 
 .poll {
   &.create {

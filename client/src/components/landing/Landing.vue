@@ -4,7 +4,7 @@
 
     <div class="mt-5">
       <main-button class="main-button" :onClick="goToPollCreate" btn-text="Make a Poll" btn-color="green"></main-button>
-      <main-button class="main-button" btn-text="Take a Poll" btn-color="purple"></main-button>
+      <main-button class="main-button" :onClick="goToRespondPolls" btn-text="Take a Poll" btn-color="purple"></main-button>
     </div>
   </div>
 </template>
@@ -22,6 +22,9 @@ export default {
   methods: {
     goToPollCreate: function() {
       router.push("/poll/create");
+    },
+    goToRespondPolls: function() {
+      router.push("/poll/respond/list");
     },
     loadData: function() {
       const vm = this;
