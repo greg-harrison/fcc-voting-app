@@ -17,15 +17,11 @@ export default {
       headers: auth.getAuthHeader()
     }
 
-    console.log('body', body);
-
     axios.post(USER_CREATE_RESPONSE_URL, body, config)
       .then(function (res) {
-        console.log('res', res);
         router.push(redirect)
       })
       .catch(function (error) {
-        console.log('error', error);
         _this.error = error.response.data.message
       });
   }
