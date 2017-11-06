@@ -5,6 +5,7 @@ const _ = require('lodash')
 
 exports.getPoll = (req, res, next) => {
   let pollId = req.params.poll_id;
+  console.log('pollId', pollId);
   db.any(
     `SELECT
       public.poll.poll_id,
@@ -86,7 +87,10 @@ exports.getPollResponses = (req, res) => {
 }
 
 exports.createPoll = function (req, res, next) {
-  // Get Creators UserId
+
+
+  // Something is going wrong when I edit a poll.
+
 
   let uuid = helpers.createUUID()
   let body = req.body
@@ -115,16 +119,13 @@ exports.createPoll = function (req, res, next) {
 
     for (let i = 0; i <= body.options.length - 1; i++) {
       let option = body.options[i]
+      console.log('option', option);
       queries.push(
         db.any('insert into poll_option(poll_id,poll_option_id,option_value)' +
           'values((select poll_id from poll where poll_id = ${poll_id}),${poll_option_id},${option_value})',
           option)
       )
     }
-
-    console.log('queries', queries);
-
-    console.log('body.options', body.options);
 
     return t.batch(queries)
   })
