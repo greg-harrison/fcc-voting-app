@@ -11,9 +11,11 @@
           </label>
           <div class="form-group">
             <div class="form-check" v-for="(option, index) in poll.options" :key="index">
-              <label class="form-check-label">
-                <input type="radio" class="form-check-input" v-model="response.poll_option_id" v-bind:value="option.poll_option_id" placeholder="option value">
-                {{option.option_value}}
+              <label v-if="!!option.option_value" class="form-check-label">
+                <input type="radio" class="form-check-input" v-model="response.poll_option_id" v-bind:value="option.poll_option_id" placeholder="option value"> {{option.option_value}}
+              </label>
+              <label v-if="!!!option.option_value" class="form-check-label">
+                RESPONSE UNAVAILABLE
               </label>
             </div>
           </div>
