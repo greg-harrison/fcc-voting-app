@@ -6,6 +6,7 @@ const API_URL = process.env.VOTE_API_URL
 const POLL_URL = API_URL + '/poll'
 const USER_CREATED_POLL_LIST_URL = POLL_URL + '/list'
 const USER_CREATE_POLL_URL = POLL_URL + '/create'
+const USER_EDIT_POLL_URL = POLL_URL + '/update'
 
 export default {
 
@@ -59,6 +60,24 @@ export default {
     }
 
     axios.post(USER_CREATE_POLL_URL, body, config)
+      .then(function (res) {
+        router.push(redirect)
+      })
+      .catch(function (error) {
+        _this.error = error.response.data.message
+      });
+  },
+
+  editPoll(context, credentials, redirect) {
+    const _this = context
+
+    let body = credentials
+
+    let config = {
+      headers: auth.getAuthHeader()
+    }
+
+    axios.put(USER_EDIT_POLL_URL + '/' + credentials.poll_id, body, config)
       .then(function (res) {
         router.push(redirect)
       })

@@ -88,38 +88,30 @@ exports.getPollResponses = (req, res) => {
 
 exports.createPoll = function (req, res, next) {
 
-
-  // Something is going wrong when I edit a poll.
-
-
   let uuid = helpers.createUUID()
   let body = req.body
 
   body.user_id = req.data.user_id
 
-  // Call is failing to send back the options on newly created polls. Issue might be in here
-
   body.poll_id = uuid
   body.createdDate = new Date()
 
   _.map(body.options, (x, i) => {
-    let new_id = helpers.createUUID()
     x.poll_id = body.poll_id
-    x.poll_option_id = new_id
+    x.poll_option_id = helpers.createUUID()
   })
 
   db.tx(t => {
-    const pollUpdate = db.none('insert into poll(poll_id,question,created_date,user_id_created)' +
+    const pollCreate = db.none('insert into poll(poll_id,question,created_date,user_id_created)' +
       'values(${poll_id},${question},${createdDate},${user_id})',
       body)
 
     const queries = [
-      pollUpdate
+      pollCreate
     ]
 
     for (let i = 0; i <= body.options.length - 1; i++) {
       let option = body.options[i]
-      console.log('option', option);
       queries.push(
         db.any('insert into poll_option(poll_id,poll_option_id,option_value)' +
           'values((select poll_id from poll where poll_id = ${poll_id}),${poll_option_id},${option_value})',
@@ -142,16 +134,52 @@ exports.createPoll = function (req, res, next) {
     })
 }
 
+
+exports.editPoll = (req, res, next) => {
+  let body = req.body
+
+  body.poll_id = req.params.poll_id
+
+  db.tx(t => {
+    const pollUpdate = db.one(
+      'UPDATE public.poll SET question = ${question} WHERE poll_id = ${poll_id}',
+      body
+    )
+
+    const queries = [
+      pollUpdate
+    ]
+
+    for (let i = 0; i <= body.options.length - 1; i++) {
+      let option = body.options[i]
+      queries.push(
+        db.one(
+          'UPDATE public.poll_option SET option_value = ${option_value} WHERE poll_option_id = ${poll_option_id}',
+          option
+        )
+      )
+    }
+
+    return t.batch(queries)
+  })
+    .then(function (data) {
+      res.status(200)
+        .json({
+          body
+        })
+      return res.json(body)
+    })
+    .catch(function (err) {
+      return next(err)
+    })
+}
+
 exports.respondToPoll = (req, res) => {
   let uuid = helpers.createUUID()
   let body = req.body
 
-  console.log('req', req.data);
-
   body.user_id = req.data.user_id
   body.response_id = uuid
-
-  console.log('body', body);
 
   db.any('insert into public.poll_response(user_id,response_id,poll_id,poll_option_id)' +
     'values(${user_id},${response_id},(select poll_id from poll where poll_id = ${poll_id}),${poll_option_id})',

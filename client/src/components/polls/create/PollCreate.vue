@@ -29,7 +29,8 @@
         </form>
       </div>
       <div class="card-footer">
-        <button class="btn btn-main close-btn" @click.prevent="create()" type="submit">{{compActionType}}</button>
+        <button v-if="compActionType === 'Edit'" class="btn btn-main close-btn" @click.prevent="edit()" type="submit">{{compActionType}}</button>
+        <button v-if="compActionType === 'Create'" class="btn btn-main close-btn" @click.prevent="create()" type="submit">{{compActionType}}</button>
         <span v-if="!!errors.formError" class="error">{{errors.formError}}</span>
       </div>
     </div>
@@ -115,6 +116,16 @@ export default {
       errors = omitBy(errors, isEmpty);
 
       this.errors = errors;
+    },
+    edit() {
+      this.validate;
+
+      this.poll.poll_id = this.$route.params.poll_id;
+
+      if (!isEmpty(this.errors)) {
+      } else {
+        polls.editPoll(this, this.poll, "/");
+      }
     },
     create() {
       this.validate;
