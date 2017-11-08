@@ -141,10 +141,14 @@ exports.editPoll = (req, res, next) => {
   body.poll_id = req.params.poll_id
 
   db.tx(t => {
-    const pollUpdate = db.one(
+    const pollUpdate = db.none(
       'UPDATE public.poll SET question = ${question} WHERE poll_id = ${poll_id}',
       body
     )
+
+    _.map(body.options, (x, i) => {
+      x.poll_id = body.poll_id
+    })
 
     const queries = [
       pollUpdate
@@ -152,12 +156,24 @@ exports.editPoll = (req, res, next) => {
 
     for (let i = 0; i <= body.options.length - 1; i++) {
       let option = body.options[i]
-      queries.push(
-        db.one(
-          'UPDATE public.poll_option SET option_value = ${option_value} WHERE poll_option_id = ${poll_option_id}',
-          option
+
+      if (!!option.poll_option_id) {
+        queries.push(
+          db.none(
+            'UPDATE public.poll_option SET option_value = ${option_value} WHERE poll_option_id = ${poll_option_id}',
+            option
+          )
         )
-      )
+      }
+      else {
+        option.poll_option_id = helpers.createUUID()
+
+        queries.push(
+          db.none('insert into poll_option(poll_id,poll_option_id,option_value)' +
+            'values((select poll_id from poll where poll_id = ${poll_id}),${poll_option_id},${option_value})',
+            option)
+        )
+      }
     }
 
     return t.batch(queries)
