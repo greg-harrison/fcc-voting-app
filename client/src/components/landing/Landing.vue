@@ -1,10 +1,12 @@
 <template>
   <div class="landing container p-0">
-    <h4>Choose a Path</h4>
-
-    <div class="mt-5">
+    <div class="mt-5 w-100">
       <main-button class="main-button" :onClick="goToPollCreate" btn-text="Make a Poll" btn-color="green"></main-button>
       <main-button class="main-button" :onClick="goToRespondPolls" btn-text="Take a Poll" btn-color="purple"></main-button>
+    </div>
+
+    <div class="pt-5">
+      <user-responses-list></user-responses-list>
     </div>
   </div>
 </template>
@@ -13,6 +15,7 @@
 import axios from "axios";
 import router from "../../router";
 import MainButton from "../reusable_components/main-button.vue";
+import UserResponsesList from "../polls/responses/ResponsesPollsList.vue";
 
 export default {
   name: "landing",
@@ -31,7 +34,8 @@ export default {
     }
   },
   components: {
-    MainButton
+    MainButton,
+    UserResponsesList
   },
   mounted() {}
 };

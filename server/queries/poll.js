@@ -82,6 +82,34 @@ exports.getUserCreatedPolls = (req, res, next) => {
     })
 }
 
+exports.getUserRespondedPolls = (req, res, next) => {
+  let userId = req.params.user_id;
+
+  db.any(
+    `
+    SELECT * FROM public.poll
+    LEFT OUTER JOIN public.poll_response ON public.poll.poll_id = public.poll_response.poll_id
+    LEFT OUTER JOIN public.poll_option ON public.poll.poll_id = public.poll_option.poll_id
+    AND public.poll_option.poll_option_id = public.poll_response.poll_option_id
+    WHERE public.poll_response.user_id = $1
+    ORDER BY
+    public.poll.created_date desc
+    `,
+    userId
+  )
+    .then(function (data) {
+      res.status(200)
+        .json({
+          status: 'success',
+          data: data,
+          message: 'Retrieved user polls'
+        })
+    })
+    .catch(function (err) {
+      return next(err)
+    })
+}
+
 exports.getPollResponses = (req, res) => {
   res.status(200)
 }

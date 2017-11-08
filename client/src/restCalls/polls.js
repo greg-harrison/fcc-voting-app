@@ -7,6 +7,7 @@ const POLL_URL = API_URL + '/poll'
 const USER_CREATED_POLL_LIST_URL = POLL_URL + '/list'
 const USER_CREATE_POLL_URL = POLL_URL + '/create'
 const USER_EDIT_POLL_URL = POLL_URL + '/update'
+const USER_RESPONDED_POLLS_LIST_URL = POLL_URL + '/responses/list'
 
 export default {
 
@@ -41,6 +42,20 @@ export default {
 
     axios.get(
       USER_CREATED_POLL_LIST_URL + '/' + credentials.user_id)
+
+      .then(function (res) {
+        _this.user.polls = res.data.data
+      })
+      .catch(function (error) {
+        _this.error = error.response.data.message
+      });
+  },
+
+  getUserRespondedPolls(context, credentials, redirect) {
+    const _this = context
+
+    axios.get(
+      USER_RESPONDED_POLLS_LIST_URL + '/' + credentials.user_id)
 
       .then(function (res) {
         _this.user.polls = res.data.data
