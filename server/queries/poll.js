@@ -82,6 +82,34 @@ exports.getUserCreatedPolls = (req, res, next) => {
     })
 }
 
+exports.getUserRespondedPolls = (req, res, next) => {
+  let userId = req.params.user_id;
+
+  db.any(
+    `
+    SELECT * FROM public.poll
+    LEFT OUTER JOIN public.poll_response ON public.poll.poll_id = public.poll_response.poll_id
+    LEFT OUTER JOIN public.poll_option ON public.poll.poll_id = public.poll_option.poll_id
+    AND public.poll_option.poll_option_id = public.poll_response.poll_option_id
+    WHERE public.poll_response.user_id = $1
+    ORDER BY
+    public.poll.created_date desc
+    `,
+    userId
+  )
+    .then(function (data) {
+      res.status(200)
+        .json({
+          status: 'success',
+          data: data,
+          message: 'Retrieved user polls'
+        })
+    })
+    .catch(function (err) {
+      return next(err)
+    })
+}
+
 exports.getPollResponses = (req, res) => {
   res.status(200)
 }
@@ -141,10 +169,14 @@ exports.editPoll = (req, res, next) => {
   body.poll_id = req.params.poll_id
 
   db.tx(t => {
-    const pollUpdate = db.one(
+    const pollUpdate = db.none(
       'UPDATE public.poll SET question = ${question} WHERE poll_id = ${poll_id}',
       body
     )
+
+    _.map(body.options, (x, i) => {
+      x.poll_id = body.poll_id
+    })
 
     const queries = [
       pollUpdate
@@ -152,12 +184,38 @@ exports.editPoll = (req, res, next) => {
 
     for (let i = 0; i <= body.options.length - 1; i++) {
       let option = body.options[i]
-      queries.push(
-        db.one(
-          'UPDATE public.poll_option SET option_value = ${option_value} WHERE poll_option_id = ${poll_option_id}',
-          option
+
+      if (!!option.poll_option_id) {
+        queries.push(
+          db.none(
+            'UPDATE public.poll_option SET option_value = ${option_value} WHERE poll_option_id = ${poll_option_id}',
+            option
+          )
         )
-      )
+      }
+      else {
+        option.poll_option_id = helpers.createUUID()
+
+        queries.push(
+          db.none('insert into poll_option(poll_id,poll_option_id,option_value)' +
+            'values((select poll_id from poll where poll_id = ${poll_id}),${poll_option_id},${option_value})',
+            option)
+        )
+      }
+    }
+
+    for (let i = 0; i <= body.deleted.length - 1; i++) {
+      let candidate = body.deleted[i]
+      console.log('candidate', candidate);
+
+      if (!!candidate.poll_option_id) {
+        queries.push(
+          db.none(
+            'DELETE FROM public.poll_option WHERE poll_option_id = ${poll_option_id}',
+            candidate
+          )
+        )
+      }
     }
 
     return t.batch(queries)

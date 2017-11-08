@@ -38,8 +38,7 @@
 </template>
 
 <script>
-// Awesome! This type of import works for Lodash!
-import { isEmpty, filter, pullAt, omitBy, pickBy, some } from "lodash";
+import { isEmpty, filter, pullAt, omitBy, pickBy, some, merge } from "lodash";
 import polls from "../../../restCalls/polls";
 
 export default {
@@ -50,7 +49,8 @@ export default {
         {
           option_value: ""
         }
-      ]
+      ],
+      deleted: []
     },
     errors: {}
   }),
@@ -74,15 +74,18 @@ export default {
     },
     removeOption(index) {
       var array = this.poll.options;
+      let test = pullAt(array, index);
+      let deletedArr = this.poll.deleted;
+
+      deletedArr.push(test[0]);
 
       if (array.length > 1) {
-        pullAt(array, index);
-
-        this.poll = Object.assign(
-          {},
+        this.poll = merge(
           {
-            options: array
-          }
+            options: array,
+            deleted: deletedArr
+          },
+          this.poll
         );
       }
     },

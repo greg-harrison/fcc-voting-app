@@ -7,6 +7,7 @@ const middleware = require('../middleware')
 router.get('/:poll_id', pollQueries.getPoll)
 router.get('/list/all', pollQueries.getAllPollsList)
 router.get('/list/:user_id', pollQueries.getUserCreatedPolls)
+router.get('/responses/list/:user_id', pollQueries.getUserRespondedPolls)
 router.get('/responses/:poll_id', pollQueries.getPollResponses)
 
 // Creation Routes
