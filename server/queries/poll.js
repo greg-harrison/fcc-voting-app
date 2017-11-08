@@ -176,6 +176,20 @@ exports.editPoll = (req, res, next) => {
       }
     }
 
+    for (let i = 0; i <= body.deleted.length - 1; i++) {
+      let candidate = body.deleted[i]
+      console.log('candidate', candidate);
+
+      if (!!candidate.poll_option_id) {
+        queries.push(
+          db.none(
+            'DELETE FROM public.poll_option WHERE poll_option_id = ${poll_option_id}',
+            candidate
+          )
+        )
+      }
+    }
+
     return t.batch(queries)
   })
     .then(function (data) {

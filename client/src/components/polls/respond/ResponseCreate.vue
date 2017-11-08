@@ -84,6 +84,5 @@ export default {
 <style lang="scss" scoped>
 @import "../../../style/_variables.scss";
 .response {
-  color: green;
 }
 </style>
