@@ -106,11 +106,15 @@ export default {
       }
     ]
 
-    _this.poll.poll_options.map(function (o) {
-      console.log('o', o);
-    })
+    //this.poll.poll_counts
+    var result = _(_this.poll.poll_options)
+      .groupBy('option_value')
+      .mapValues(function (item, itemId) {
+        item.name = item.poll_option
+        item.count = _.countBy(item, 'option_value')
+      }).value();
 
-    console.log('_this.poll.poll_counts', _this.poll.poll_counts);
+    _this.poll.poll_counts = result
   },
 
   editPoll(context, credentials, redirect) {
