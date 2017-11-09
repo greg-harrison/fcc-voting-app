@@ -86,7 +86,7 @@ export default {
           return "#arc-" + i;
         })
         .text(function(d) {
-          return d.data.name;
+          return d.data.option_value;
         });
     }
   }

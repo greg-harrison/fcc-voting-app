@@ -111,7 +111,31 @@ exports.getUserRespondedPolls = (req, res, next) => {
 }
 
 exports.getPollResponses = (req, res) => {
-  res.status(200)
+  console.log('req', req);
+  let poll_id = req.params.poll_id
+
+  db.any(
+    `
+    SELECT * FROM public.poll
+    LEFT OUTER JOIN public.poll_response ON public.poll.poll_id = public.poll_response.poll_id
+    LEFT OUTER JOIN public.poll_option ON public.poll.poll_id = public.poll_option.poll_id
+    AND public.poll_option.poll_option_id = public.poll_response.poll_option_id
+    WHERE public.poll.poll_id = $1
+    `,
+    poll_id
+  )
+    .then(function (data) {
+      res.status(200)
+        .json({
+          status: 'success',
+          data: data,
+          message: 'Retrieved one poll'
+        });
+    })
+    .catch(function (err) {
+      return next(err);
+    });
+
 }
 
 exports.createPoll = function (req, res, next) {
