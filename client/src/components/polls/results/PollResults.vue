@@ -4,14 +4,20 @@
       <h2 class="col-12 text-center">
         {{poll.question}}
       </h2>
+      <div class="col-12 text-center">
+        <span class="text-underline mb-1">Responses</span>
+        <div v-for="(count, index) in poll.poll_counts" :key="index">
+          <span>{{count.option_value}} ({{ count.value/poll.poll_total * 100 | roundToDecimals }}%)</span>
+        </div>
+        <div class="mt-1">
+          <strong>Total Votes:</strong>
+          {{poll.poll_total}}
+        </div>
+      </div>
     </div>
     <div class="row mt-5">
       <div class="col-12 text-center">
         <pie :data="poll.poll_counts"></pie>
-        <div>Total Votes: {{poll.poll_total}}</div>
-        <div v-for="(count, index) in poll.poll_counts" :key="index">
-          <span>{{count.option_value}} - {{ count.value/poll.poll_total * 100 | roundToDecimals }}%</span>
-        </div>
       </div>
     </div>
   </div>
@@ -58,5 +64,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
+.poll {
+  &.results {
+    .text-underline {
+      font-size: 1.2rem;
+      text-decoration: underline;
+    }
+  }
+}
 </style>
