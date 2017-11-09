@@ -1,6 +1,7 @@
 import axios from 'axios'
 import auth from '../auth/'
 import router from '../router'
+import { mapValues, countBy } from 'lodash'
 
 const API_URL = process.env.VOTE_API_URL
 const POLL_URL = API_URL + '/poll'
@@ -81,6 +82,39 @@ export default {
       .catch(function (error) {
         _this.error = error.response.data.message
       });
+  },
+
+  getPollResponses(context, credentials, redirect) {
+    const _this = context
+
+    _this.poll.question = 'Test'
+    _this.poll.poll_options = [
+      {
+        option_value: 'whatever',
+      },
+      {
+        option_value: 'whatever',
+      },
+      {
+        option_value: 'whatever',
+      },
+      {
+        option_value: 'testing',
+      },
+      {
+        option_value: 'sajdjalsk',
+      }
+    ]
+
+    //this.poll.poll_counts
+    var result = _(_this.poll.poll_options)
+      .groupBy('option_value')
+      .mapValues(function (item, itemId) {
+        item.name = item.poll_option
+        item.count = _.countBy(item, 'option_value')
+      }).value();
+
+    _this.poll.poll_counts = result
   },
 
   editPoll(context, credentials, redirect) {
