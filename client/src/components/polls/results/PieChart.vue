@@ -34,9 +34,7 @@ export default {
     this.arc = d3
       .arc()
       .outerRadius(chartHeight / 2)
-      .innerRadius(chartHeight / 4)
-      .padAngle(0.03)
-      .cornerRadius(8);
+      .innerRadius(chartHeight / 4);
 
     this.pieG = this.chartLayer
       .append("g")
@@ -86,7 +84,7 @@ export default {
           return "#arc-" + i;
         })
         .text(function(d) {
-          return d.data.name;
+          return d.data.option_value + " (" + d.data.value + ")";
         });
     }
   }

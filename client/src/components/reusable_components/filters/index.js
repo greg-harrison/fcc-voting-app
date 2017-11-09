@@ -3,5 +3,9 @@ module.exports = {
     if (!value) return "";
     value = value.toString();
     return value.charAt(0).toUpperCase() + value.slice(1);
+  },
+  roundToDecimals: function (value) {
+    if (!value) return "";
+    return Math.round(value * 100) / 100;
   }
 }

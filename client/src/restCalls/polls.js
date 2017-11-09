@@ -1,7 +1,7 @@
 import axios from 'axios'
 import auth from '../auth/'
 import router from '../router'
-import { mapValues, countBy } from 'lodash'
+import { map, mapValues, countBy, groupBy } from 'lodash'
 
 const API_URL = process.env.VOTE_API_URL
 const POLL_URL = API_URL + '/poll'
@@ -9,6 +9,7 @@ const USER_CREATED_POLL_LIST_URL = POLL_URL + '/list'
 const USER_CREATE_POLL_URL = POLL_URL + '/create'
 const USER_EDIT_POLL_URL = POLL_URL + '/update'
 const USER_RESPONDED_POLLS_LIST_URL = POLL_URL + '/responses/list'
+const POLL_RESPONSES_URL = POLL_URL + '/responses'
 
 export default {
 
@@ -87,34 +88,32 @@ export default {
   getPollResponses(context, credentials, redirect) {
     const _this = context
 
-    _this.poll.question = 'Test'
-    _this.poll.poll_options = [
-      {
-        option_value: 'whatever',
-      },
-      {
-        option_value: 'whatever',
-      },
-      {
-        option_value: 'whatever',
-      },
-      {
-        option_value: 'testing',
-      },
-      {
-        option_value: 'sajdjalsk',
-      }
-    ]
+    axios.get(
+      POLL_RESPONSES_URL + '/' + credentials.poll_id)
+      .then(function (res) {
+        _this.poll.question = res.data.data[0].question
+        _this.poll.poll_options = res.data.data
+        _this.poll.poll_total = res.data.data.length
 
-    //this.poll.poll_counts
-    var result = _(_this.poll.poll_options)
-      .groupBy('option_value')
-      .mapValues(function (item, itemId) {
-        item.name = item.poll_option
-        item.count = _.countBy(item, 'option_value')
-      }).value();
+        let pollCountArr = []
+        let optionCount = countBy(_this.poll.poll_options, 'option_value')
+        let keys = Object.keys(optionCount)
 
-    _this.poll.poll_counts = result
+        map(keys, (o, i) => {
+          let obj = {
+            option_value: o,
+            value: optionCount[o].valueOf()
+          }
+          pollCountArr.push(obj)
+        })
+
+        console.log('pollCountArr', pollCountArr);
+
+        _this.poll.poll_counts = pollCountArr
+      })
+      .catch(function (error) {
+        _this.error = error.response.data.message
+      });
   },
 
   editPoll(context, credentials, redirect) {
