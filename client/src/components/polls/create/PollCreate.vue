@@ -18,10 +18,15 @@
               Options
               <span v-if="!!errors.optionsError" class="error">{{errors.optionsError}}</span>
             </span>
+            <div v-if="compActionType === 'Edit'" v-for="(option, index) in poll.original_options" :key="index">
+              <label class="d-block">
+                <input v-model="option.option_value" placeholder="option value" v-bind:disabled="true">
+              </label>
+            </div>
             <div v-for="(option, index) in poll.options" :key="index">
               <label class="d-block">
                 <input v-model="option.option_value" placeholder="option value">
-                <strong v-if="index >= 1" @click.prevent="removeOption(index)">X</strong>
+                <strong v-if="index >= 1 || compActionType === 'Edit'" @click.prevent="removeOption(index)">X</strong>
               </label>
             </div>
             <button class="btn btn-main add-btn" @click.prevent="addOption()">Add Option</button>
@@ -52,6 +57,7 @@ export default {
       ],
       deleted: []
     },
+    isEditting: false,
     errors: {}
   }),
   props: ["poll_id"],
@@ -65,7 +71,7 @@ export default {
   },
   methods: {
     fetchData() {
-      console.log("fetching");
+      this.isEditting = true
       polls.getPoll(this, this.$route.params);
       this.compActionType = "Edit";
     },
