@@ -16,11 +16,18 @@ export default {
   getPoll(context, credentials, redirect) {
     const _this = context
 
+    let isEdit = _this.isEditting
+
     axios.get(
       POLL_URL + '/' + credentials.poll_id)
       .then(function (res) {
         _this.poll.question = res.data.data[0].question
-        _this.poll.options = res.data.data
+        if (isEdit) {
+          _this.poll.original_options = res.data.data
+          _this.poll.options = []
+        } else {
+          _this.poll.options = res.data.data
+        }
       })
       .catch(function (error) {
         _this.error = error.response.data.message
