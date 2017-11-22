@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import Vuex from 'vuex'
 
 import auth from '@/auth'
 import Header from '@/components/base_components/Header'
@@ -14,6 +15,7 @@ import RespondList from '@/components/polls/respond/RespondPollsList'
 import PollCreateResponse from '@/components/polls/respond/ResponseCreate'
 import PollResults from '@/components/polls/results/PollResults'
 
+Vue.use(Vuex)
 Vue.use(Router)
 const router = new Router({
   mode: 'history',
