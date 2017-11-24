@@ -13,7 +13,26 @@ Vue.config.productionTip = false
 
 const store = new Vuex.Store({
   state: {
-    count: 0
+    user: {
+      id: '',
+      name: '',
+      password: '',
+      email: '',
+      isRegistered: false,
+      createdTotal: 0,
+      createdPolls: [],
+      respondedPolls: []
+    },
+    creatingPoll: {
+      pollId: '',
+      title: '',
+      createdUserId: '',
+      pollOptions: []
+    },
+    response: {
+      pollId: '',
+      pollOptionId: ''
+    }
   }
 })
 
