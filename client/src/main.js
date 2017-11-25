@@ -33,6 +33,18 @@ const store = new Vuex.Store({
       pollId: '',
       pollOptionId: ''
     }
+  },
+  mutations: {
+    getUser: (state, payload) => {
+      const user = {
+        user: payload
+      }
+      console.log(state)
+      state.user.unshift(user);
+    },
+  },
+  getters: {
+    user: state => state.user
   }
 })
 
@@ -41,6 +53,11 @@ new Vue({
   el: '#app',
   router,
   template: '<App/>',
+  computed: {
+    user: function () {
+      return this.$store.getters.user
+    }
+  },
   components: { App },
   store: store
 })
