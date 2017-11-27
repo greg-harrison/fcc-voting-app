@@ -34,6 +34,9 @@ const store = new Vuex.Store({
       pollOptionId: ''
     }
   },
+  getters: {
+    user: state => state.user
+  },
   mutations: {
     getUser: (state, payload) => {
       const user = {
@@ -44,22 +47,11 @@ const store = new Vuex.Store({
     },
     updateEmail: (state, payload) => {
       const user = {
-        user: {
-          email: payload.email
-        }
+        email: payload
       }
-      state.user.unshift(user);
+      state.user = user;
     }
   },
-  actions: {
-    updateEmail({ context }) {
-      console.log('context', context);
-      commit('updateEmail')
-    }
-  },
-  getters: {
-    user: state => state.user
-  }
 })
 
 /* eslint-disable no-new */
@@ -68,8 +60,9 @@ new Vue({
   router,
   template: '<App/>',
   computed: {
-    user: function () {
-      return this.$store.getters.user
+    user: {
+      get() { return this.$store.getters.user },
+      set(value) { this.$store.commit('updateEmail', value) }
     }
   },
   components: { App },

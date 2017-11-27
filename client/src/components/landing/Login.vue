@@ -12,10 +12,10 @@
                                             </p> -->
         <form>
           <label class="d-block">
-            <input @change="updateEmail(credentials.email)" v-model="credentials.email" placeholder="email">
+            <input @change="updateEmail(user.email)" v-model="user.email" placeholder="email">
           </label>
           <label class="d-block">
-            <input v-model="credentials.pass" placeholder="password" type="password">
+            <input v-model="user.pass" placeholder="password" type="password">
           </label>
         </form>
         <p v-if="error" class="error">
@@ -36,15 +36,17 @@
 
 <script>
 import auth from "../../auth/";
-import { mapActions } from "vuex"
+import { mapActions } from "vuex";
+import { store } from "../../main";
 
-console.log('mapActions', mapActions);
+console.log("store", store);
+console.log("mapActions", mapActions);
 
 export default {
   name: "login",
   data: () => ({
-    credentials: {
-      email: "",
+    user: {
+      email: this.user.email,
       pass: ""
     },
     error: ""
@@ -59,11 +61,22 @@ export default {
       auth.login(this, credentials, "/");
       // GO TO LANDING
     },
-    ...mapActions([
-      'updateEmail'
-    ])
+    updateEmail: function() {
+      console.log("this.$store", this.$store);
+      this.$store.commit("updateEmail", this.user.email);
+    }
   },
-  mounted() { }
+  computed: {
+    user: {
+      get() {
+        return this.$store.getters.user;
+      },
+      set(value) {
+        this.$store.commit("updateEmail", value);
+      }
+    }
+  },
+  mounted() {}
 };
 </script>
 
