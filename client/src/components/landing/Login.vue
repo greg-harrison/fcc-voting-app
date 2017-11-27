@@ -8,11 +8,11 @@
       </div>
       <div class="card-body">
         <!-- <p class="intro-text" v-if="$route.query.redirect">
-                                You need to login first.
-                              </p> -->
+                                              You need to login first.
+                                            </p> -->
         <form>
           <label class="d-block">
-            <input v-model="credentials.email" placeholder="email">
+            <input @change="updateEmail(credentials.email)" v-model="credentials.email" placeholder="email">
           </label>
           <label class="d-block">
             <input v-model="credentials.pass" placeholder="password" type="password">
@@ -36,6 +36,9 @@
 
 <script>
 import auth from "../../auth/";
+import { mapActions } from "vuex"
+
+console.log('mapActions', mapActions);
 
 export default {
   name: "login",
@@ -55,9 +58,12 @@ export default {
 
       auth.login(this, credentials, "/");
       // GO TO LANDING
-    }
+    },
+    ...mapActions([
+      'updateEmail'
+    ])
   },
-  mounted() {}
+  mounted() { }
 };
 </script>
 

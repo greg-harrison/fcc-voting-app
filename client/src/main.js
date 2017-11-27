@@ -42,6 +42,20 @@ const store = new Vuex.Store({
       console.log(state)
       state.user.unshift(user);
     },
+    updateEmail: (state, payload) => {
+      const user = {
+        user: {
+          email: payload.email
+        }
+      }
+      state.user.unshift(user);
+    }
+  },
+  actions: {
+    updateEmail({ context }) {
+      console.log('context', context);
+      commit('updateEmail')
+    }
   },
   getters: {
     user: state => state.user
