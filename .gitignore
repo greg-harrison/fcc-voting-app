@@ -1,5 +1,7 @@
 .vscode/
 Session.vim
+*.swp
+*.swo
 
 logs
 *.log
@@ -14,3 +16,5 @@ yarn-error.log*
 /client/node_modules
 /server/node_modules
 node_modules/
+
+.DS_Store
