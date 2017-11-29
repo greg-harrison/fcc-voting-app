@@ -1,0 +1,2 @@
+export const RECEIVE_USER = 'RECEIVE_USER'
+export const USER_INPUT_EMAIL = 'USER_INPUT_EMAIL'

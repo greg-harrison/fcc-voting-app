@@ -7,12 +7,9 @@
         </router-link>
       </div>
       <div class="card-body">
-        <!-- <p class="intro-text" v-if="$route.query.redirect">
-                                              You need to login first.
-                                            </p> -->
         <form>
           <label class="d-block">
-            <input @change="updateEmail(user.email)" v-model="user.email" placeholder="email">
+            <input :change="userInputEmail(user.email)" v-model="user.email" placeholder="email">
           </label>
           <label class="d-block">
             <input v-model="user.pass" placeholder="password" type="password">
@@ -36,17 +33,13 @@
 
 <script>
 import auth from "../../auth/";
-import { mapActions } from "vuex";
-import { store } from "../../main";
-
-console.log("store", store);
-console.log("mapActions", mapActions);
+import { mapGetters, mapActions } from "vuex";
 
 export default {
   name: "login",
   data: () => ({
     user: {
-      email: this.user.email,
+      email: "",
       pass: ""
     },
     error: ""
@@ -61,22 +54,14 @@ export default {
       auth.login(this, credentials, "/");
       // GO TO LANDING
     },
-    updateEmail: function() {
-      console.log("this.$store", this.$store);
-      this.$store.commit("updateEmail", this.user.email);
-    }
+    ...mapActions(["userInputEmail"])
   },
   computed: {
-    user: {
-      get() {
-        return this.$store.getters.user;
-      },
-      set(value) {
-        this.$store.commit("updateEmail", value);
-      }
-    }
+    ...mapGetters(["getUser"])
   },
-  mounted() {}
+  created() {
+    this.$store.dispatch("getUser");
+  }
 };
 </script>
 
