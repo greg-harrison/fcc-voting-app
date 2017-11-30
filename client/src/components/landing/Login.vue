@@ -12,8 +12,10 @@
             <input :change="userInputEmail(user.email)" v-model="user.email" placeholder="email">
           </label>
           <label class="d-block">
-            <input v-model="user.pass" placeholder="password" type="password">
+            <input :change="userInputPassword(user.pass || '')" v-model="user.pass" placeholder="password" type="password">
           </label>
+          <span>{{user.passError}}</span>
+          <div v-if="!!user.passError">TIBBY</div>
         </form>
         <p v-if="error" class="error">
           {{ error }}, please try again
@@ -38,10 +40,6 @@ import { mapGetters, mapActions } from "vuex";
 export default {
   name: "login",
   data: () => ({
-    user: {
-      email: "",
-      pass: ""
-    },
     error: ""
   }),
   methods: {
@@ -54,11 +52,11 @@ export default {
       auth.login(this, credentials, "/");
       // GO TO LANDING
     },
-    ...mapActions(["userInputEmail"])
+    ...mapActions(["userInputEmail", "userInputPassword"])
   },
-  computed: {
-    ...mapGetters(["getUser"])
-  },
+  computed: mapGetters({
+    user: "user"
+  }),
   created() {
     this.$store.dispatch("getUser");
   }
