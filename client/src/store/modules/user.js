@@ -5,7 +5,8 @@ const defaultState = {
   user: {
     id: '',
     name: '',
-    password: '',
+    pass: '',
+    passError: false,
     email: '',
     isRegistered: false,
     createdTotal: 0,
@@ -16,10 +17,15 @@ const defaultState = {
 
 const actions = {
   getUser: ({ commit }) => {
+    console.log('getting user');
     commit(types.RECEIVE_USER, { user: auth.user.user_detail })
   },
   userInputEmail: ({ commit }, email) => {
+    console.log('one more');
     commit(types.USER_INPUT_EMAIL, { text: email })
+  },
+  userInputPassword: ({ commit }, password) => {
+    commit(types.USER_INPUT_PASSWORD, { text: password, error: false })
   }
 }
 const mutations = {
@@ -29,6 +35,11 @@ const mutations = {
 
   [types.USER_INPUT_EMAIL](state, { text }) {
     state.user.email = text
+  },
+
+  [types.USER_INPUT_PASSWORD](state, { text, error }) {
+    state.user.pass = text
+    state.user.passError = error
   }
 }
 const getters = {
