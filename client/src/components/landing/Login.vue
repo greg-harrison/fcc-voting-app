@@ -9,10 +9,10 @@
       <div class="card-body">
         <form>
           <label class="d-block">
-            <input :change="userInputEmail(user.email)" v-model="user.email" placeholder="email">
+            <input :change="this.onEmail" v-model="user.email" placeholder="email">
           </label>
           <label class="d-block">
-            <input :change="userInputPassword(user.pass || '')" v-model="user.pass" placeholder="password" type="password">
+            <input :change="this.onPassword" v-model="user.pass" placeholder="password" type="password">
           </label>
           <span>{{user.passError}}</span>
           <div v-if="!!user.passError">TIBBY</div>
@@ -51,6 +51,16 @@ export default {
 
       auth.login(this, credentials, "/");
       // GO TO LANDING
+    },
+    onEmail(e) {
+      const value = e.target.value;
+      this.$emit('input', value)
+      this.userInputEmail(value)
+    },
+    onPassword(e) {
+      const value = e.target.value || '';
+      this.$emit('input', value)
+      this.userInputPassword(value)
     },
     ...mapActions(["userInputEmail", "userInputPassword"])
   },
